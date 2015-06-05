@@ -1,0 +1,242 @@
+#
+# Nethack configuration file.
+#
+# Please read the Guidebook in /usr/share/doc/nethack or at www.nethack.org.
+#
+# Naming this file $(HOME)/.nethackrc or setting the environment
+# variable NETHACKOPTIONS to point to its full path name elsewhere tells
+# NetHack to use X11 windowing (provided the executable was compiled with 
+# that ability).
+#
+# Suggested for qt:
+#OPTIONS=number_pad,menustyle:partial,!time,showexp
+#OPTIONS=hilite_pet,toptenwin,msghistory:200,windowtype:Qt
+#
+OPTIONS=windowtype:tty
+OPTIONS=!legacy
+OPTIONS=color
+OPTIONS=!cmdassist
+OPTIONS=suppress_alert:3.4.3
+OPTIONS=!rest_on_space
+OPTIONS=autopickup,pickup_types:$!+?/"=*
+OPTIONS=!prayconfirm
+OPTIONS=msg_window:full
+OPTIONS=time
+OPTIONS=sortpack
+OPTIONS=lit_corridor
+OPTIONS=boulder:0 # make boulders more recognisable
+OPTIONS=monsters:abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ@8'&;:~] # make ghosts and shades visible as 8
+OPTIONS=scores:10 top/3 around
+OPTIONS=pettype:dog
+#OPTIONS=name:player
+#OPTIONS=gender:male
+#OPTIONS=fruit:mango
+#OPTIONS=dogname:Izchak
+#OPTIONS=catname:Chun-Li
+#OPTIONS=horsename:Marlon
+
+#patches:
+OPTIONS=dumpfile
+OPTIONS=sortloot:loot
+OPTIONS=paranoid_hit
+OPTIONS=paranoid_quit
+OPTIONS=paranoid_remove
+#OPTIONS=qwertz_layout
+OPTIONS=quiver_fired
+OPTIONS=pickup_thrown
+OPTIONS=menucolors
+OPTIONS=use_darkgray
+
+#menucolors
+MENUCOLOR=" uncursed"=white
+MENUCOLOR=" blessed"=cyan
+MENUCOLOR=" cursed"=red
+
+MENUCOLOR=" \(holy water\|blessed clear potions?\|blessed potions? called water\)"=cyan&bold
+MENUCOLOR=" \(unholy water\|cursed clear potions?\|cursed potions? called water\)"=orange
+
+MENUCOLOR=" bag .* holding"=magenta
+MENUCOLOR=" luck\(stone\)?"=magenta
+MENUCOLOR=" wand .* wish\(ing\)?"=magenta
+MENUCOLOR=" magic marker"=magenta
+MENUCOLOR=" magic lamp"=magenta
+MENUCOLOR=" unicorn horn"=magenta
+MENUCOLOR=" tinning kit"=magenta
+MENUCOLOR=" ring .* regeneration"=magenta
+MENUCOLOR=" ring .* conflict"=magenta
+MENUCOLOR=" ring .* free action"=magenta
+MENUCOLOR=" ring .* teleport control"=magenta
+MENUCOLOR=" ring .* levitation"=magenta
+MENUCOLOR=" ring .* slow digestion"=magenta
+MENUCOLOR=" amulet .* lifesaving"=magenta
+MENUCOLOR=" amulet .* reflection"=magenta
+MENUCOLOR=" stethoscope"=magenta
+
+MENUCOLOR=" \(Bell of Opening\|silver bell\|Candelabrum of Invocation\|candelabrum\|Book of the Dead\|papyrus spellbook\)"=magenta&bold
+MENUCOLOR=" Amulet of Yendor named"=magenta&bold&underline
+
+MENUCOLOR=" cursed.* bag .* holding"=red&bold
+MENUCOLOR=" cursed.* luck\(stone\)?"=red&bold
+MENUCOLOR=" cursed.* unicorn horn"=red&bold
+
+MENUCOLOR=" loadstone"=red&bold
+
+MENUCOLOR=" bag .* tricks"=lightblue&underline
+MENUCOLOR=" wand .* cancellation"=lightblue&underline
+MENUCOLOR=" wand .* vanish"=lightblue&underline
+MENUCOLOR=" sack .* cancellation"=lightblue&underline
+
+MENUCOLOR=" gold piece"=yellow
+MENUCOLOR=" valuable"=brown
+MENUCOLOR=" gems? .* hard"=yellow
+MENUCOLOR=" worthless"=black
+MENUCOLOR=" called glass"=black
+MENUCOLOR=" junk"=black
+
+MENUCOLOR="^. - [at0-9].* ([^ln0-9][a-zA-Z ]*)"=lightgreen #items in use
+MENUCOLOR="^. - [at0-9].* cursed.* ([^ln0-9][a-zA-Z ]*)"=orange&underline #cursed items in use
+
+MENUCOLOR="[a-zA-Z] - [a-zA-Z ]+ [0-9]\*   [a-z]+ +[0-9]+%"=magenta #forgotten spells
+
+MENUCOLOR="^ +[a-z -]+ +\[\(Unskilled\|Basic\|Skilled\|Expert\|Master\|Grand Master\)\]$"=none
+MENUCOLOR="^ *[a-z] - +[a-z -]+ +\[\(Unskilled\|Basic\|Skilled\|Expert\|Master\|Grand Master\)\]$"=white
+MENUCOLOR="^ +\* +[a-z -]+ +\[\(Unskilled\|Basic\|Skilled\|Expert\|Master\|Grand Master\)\]$"=white
+MENUCOLOR="^ +# +[a-z -]+ +\[\(Unskilled\|Basic\|Skilled\|Expert\|Master\|Grand Master\)\]$"=none
+
+MENUCOLOR=" is empty. Do what?"=none
+MENUCOLOR="Put something into .*"=none
+MENUCOLOR="Take something out of .*"=none
+
+# Autopickup exceptions
+# >patter : don't pick up items matched by pattern
+# <pattern : pick up items matched by pattern
+# * : wildcard for any number of characters
+# ? : wildcard for exactly one character
+# > overrides <
+
+# don't pick up empty wands
+AUTOPICKUP_EXCEPTION=">* named empty"
+
+# name things junk to override other rules
+AUTOPICKUP_EXCEPTION=">* junk"
+
+# important stuff
+AUTOPICKUP_EXCEPTION=">*cheap plastic imitation of the Amulet of Yendor"
+AUTOPICKUP_EXCEPTION=">*cheap plastic imitation of the Amulet of Yendor named ?*"
+AUTOPICKUP_EXCEPTION=">*Amulet of Yendor" # name the real one and don't fall for the fakes
+AUTOPICKUP_EXCEPTION="<*Amulet of Yendor named ?*"
+AUTOPICKUP_EXCEPTION="<*Candelabrum of Invocation"
+AUTOPICKUP_EXCEPTION="<*candelabrum"
+AUTOPICKUP_EXCEPTION="<*Bell of Opening"
+AUTOPICKUP_EXCEPTION="<*silver bell"
+AUTOPICKUP_EXCEPTION="<*Book of the Dead"
+AUTOPICKUP_EXCEPTION="<*papyrus spellbook"
+
+# ammo
+AUTOPICKUP_EXCEPTION="<*dagger"
+# AUTOPICKUP_EXCEPTION="<*elven dagger"
+# AUTOPICKUP_EXCEPTION="<*orcish dagger"
+# AUTOPICKUP_EXCEPTION="<*silver dagger"
+# AUTOPICKUP_EXCEPTION="<*runed dagger"
+# AUTOPICKUP_EXCEPTION="<*crude dagger"
+AUTOPICKUP_EXCEPTION=">a cursed *dagger"
+AUTOPICKUP_EXCEPTION=">*dagger named cursed"
+
+# useful tools
+#AUTOPICKUP_EXCEPTION="<*expensive camera"
+AUTOPICKUP_EXCEPTION="<*lenses"
+AUTOPICKUP_EXCEPTION="<*stethoscope"
+AUTOPICKUP_EXCEPTION="<*can of grease"
+#AUTOPICKUP_EXCEPTION="<*magic whistle"
+AUTOPICKUP_EXCEPTION="<*magic marker"
+AUTOPICKUP_EXCEPTION="<*magic lamp"
+AUTOPICKUP_EXCEPTION="<*key"
+
+# food
+AUTOPICKUP_EXCEPTION="<*lizard corpse"
+AUTOPICKUP_EXCEPTION="<*tripe ration"
+AUTOPICKUP_EXCEPTION="<*meatball"
+AUTOPICKUP_EXCEPTION="<*cream pie"
+AUTOPICKUP_EXCEPTION="<*egg"
+AUTOPICKUP_EXCEPTION="<*candy bar"
+AUTOPICKUP_EXCEPTION="<*fortune cookie"
+AUTOPICKUP_EXCEPTION="<*pancake"
+AUTOPICKUP_EXCEPTION="<*tin of spinach"
+AUTOPICKUP_EXCEPTION="<*kelp frond"
+AUTOPICKUP_EXCEPTION="<*eucalyptus leaf"
+AUTOPICKUP_EXCEPTION="<*apple"
+AUTOPICKUP_EXCEPTION="<*orange"
+AUTOPICKUP_EXCEPTION="<* pear"
+AUTOPICKUP_EXCEPTION="<*melon"
+AUTOPICKUP_EXCEPTION="<*banana"
+AUTOPICKUP_EXCEPTION="<*carrot"
+AUTOPICKUP_EXCEPTION="<*sprig of wolfsbane"
+AUTOPICKUP_EXCEPTION="<*clove of garlic"
+AUTOPICKUP_EXCEPTION="<*slime mold"
+AUTOPICKUP_EXCEPTION="<*lembas wafer"
+AUTOPICKUP_EXCEPTION="<*cram ration"
+AUTOPICKUP_EXCEPTION="<*food ration"
+AUTOPICKUP_EXCEPTION="<*K-ration"
+AUTOPICKUP_EXCEPTION="<*C-ration"
+
+# gems and loadstones
+AUTOPICKUP_EXCEPTION=">*worthless*"
+AUTOPICKUP_EXCEPTION=">* called worthless"
+AUTOPICKUP_EXCEPTION=">* called glass"
+AUTOPICKUP_EXCEPTION=">*loadstone"
+AUTOPICKUP_EXCEPTION=">*loadstone named ?*"
+AUTOPICKUP_EXCEPTION="<*stone called luck"
+AUTOPICKUP_EXCEPTION="<*luckstone"
+AUTOPICKUP_EXCEPTION="<*touchstone"
+AUTOPICKUP_EXCEPTION=">*flint stone"
+AUTOPICKUP_EXCEPTION=">*rock"
+AUTOPICKUP_EXCEPTION=">*gray stone"
+# #blind: glass/gems show up as gem, all else as stone.
+AUTOPICKUP_EXCEPTION=">stone"
+AUTOPICKUP_EXCEPTION=">*sed stone"
+
+
+# stop on delayed instadeaths
+MSGTYPE=stop "The couatl swings itself around you!"
+MSGTYPE=stop "The electric eel swings itself around you!"
+MSGTYPE=stop "The giant eel swings itself around you!"
+MSGTYPE=stop "The kraken swings itself around you!"
+MSGTYPE=stop "The python grabs you!"
+MSGTYPE=stop "You don't feel very well."
+MSGTYPE=stop "You are turning a little green."
+MSGTYPE=stop "Your limbs are getting oozy."
+MSGTYPE=stop "Your skin begins to peel away."
+MSGTYPE=stop "You are turning into a green slime."
+MSGTYPE=stop "You are slowing down."
+MSGTYPE=stop "Your limbs are stiffening."
+MSGTYPE=stop "It constricts your throat!"
+MSGTYPE=stop "You find it hard to breathe."
+MSGTYPE=stop "You're gasping for air."
+MSGTYPE=stop "Your blood is having trouble reaching your brain."
+MSGTYPE=stop "You can no longer breathe."
+MSGTYPE=stop "You're turning blue."
+MSGTYPE=stop "Your consciousness is fading."
+MSGTYPE=stop "You feel deathly sick."
+MSGTYPE=stop "You feel much worse."
+MSGTYPE=stop "You feel even worse."
+
+MSGTYPE=norep "You hear someone cursing shoplifters."
+MSGTYPE=norep "You hear the chime of a cash register."
+#MSGTYPE=hide "The priest* of * intones:  ?Pilgrim, you enter a sacred place!?"
+#MSGTYPE=norep "You experience a strange sense of peace."
+#MSGTYPE=norep "You have a strange forbidding feeling."
+MSGTYPE=norep "You hear bubbling water."
+MSGTYPE=norep "You hear water falling on coins."
+MSGTYPE=norep "You hear the splashing of a naiad."
+MSGTYPE=norep "You hear a slow drip."
+MSGTYPE=norep "You hear a gurgling noise."
+MSGTYPE=norep "You hear someone counting money."
+MSGTYPE=norep "You hear the footsteps of a guard on patrol."
+MSGTYPE=norep "You hear someone searching."
+MSGTYPE=norep "You hear snoring snakes."
+MSGTYPE=norep "You hear a strange wind."
+MSGTYPE=norep "You hear convulsive ravings."
+
+# don't miss the vibrating square
+MSGTYPE=stop "You feel a strange vibration under your *."
+MSGTYPE=stop "You feel a strange vibration beneath you."
