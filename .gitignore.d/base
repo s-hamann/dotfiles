@@ -1,0 +1,9 @@
+*
+!/.config
+!/.config/system-wide
+!/.config/system-wide/sync-files.sh
+!/.config/vcsh
+!/.config/vcsh/**
+/.config/vcsh/repo.d
+!/.gitignore.d
+!/.gitignore.d/base
