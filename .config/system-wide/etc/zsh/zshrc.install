@@ -1,0 +1,2 @@
+[[ "$OS" == 'linux' && "$FLAVOUR" == 'debian' ]] && target_filename='/etc/zsh/zshrc.local'
+[[ "$OS" == 'cygwin' ]] && target_filename='/etc/zshrc'
