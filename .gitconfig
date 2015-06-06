@@ -1,0 +1,47 @@
+[color]
+	ui = auto
+[color "branch"]
+	current = 74 ul # blue, underlined
+	local = 74 # blue
+	remote = 221 # yellow
+[color "diff"]
+	meta = 221 # yellow
+	frag =  241 # grey
+	func = 202 # orange
+[color "decorate"]
+	branch = 74 # blue
+	remoteBranch = 221 # yellow
+	tag = 113 # green
+	stash = 197 # magenta
+	HEAD = 74 ul # blue, underlined
+[color "grep"]
+	filename = 165 # purple
+	function = 202 # orange
+	linenumber = 221 # yellow
+	matchContext = 221 # yellow
+	matchSelected = 221 bold # yellow, bold
+	selected = 230 # very light yellow
+	separator = 241 # grey
+[color "status"]
+	branch = 74 ul # blue, underlined
+	added = 113 # green
+	changed = 166 # orange-red
+	untracked = 166 # orange-red
+	nobranch = 196 # red
+[alias]
+	s = status --short
+	graph = log --graph --format=format:\"%C(auto)%h %d %ad %C(119)%an%C(reset) %C(bold)%s\" --date=short
+	changes = log --stat --find-renames --format=format:\"%C(auto)%h %C(green)%d%C(reset) %C(auto)%ad %C(119)%an%C(reset) %n%C(bold)%s%C(auto)%n%b\" --date=short
+	wdiff = diff --word-diff=color
+	cdiff = diff --cached --find-renames
+[advice]
+	statusHints = false
+[push]
+	default = simple
+	followTags = true
+[core]
+	excludesfile = ~/.gitignore
+	whitespace = tabwidth=4
+[include]
+	path = ~/.gitidentity
+	path = ~/.gitconfig.local
