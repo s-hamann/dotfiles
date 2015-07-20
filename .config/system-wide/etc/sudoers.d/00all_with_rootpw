@@ -1,0 +1,4 @@
+# allow users in the wheel group to run all commands with the root password
+Cmnd_Alias ALL_WITH_ROOTPW = ALL
+Defaults!ALL_WITH_ROOTPW rootpw
+%wheel ALL=(ALL) ALL_WITH_ROOTPW

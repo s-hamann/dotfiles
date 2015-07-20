@@ -3,6 +3,8 @@
 !/.config/system-wide
 !/.config/system-wide/etc
 !/.config/system-wide/etc/DIR_COLORS*
+!/.config/system-wide/etc/sudoers.d
+!/.config/system-wide/etc/sudoers.d/*
 !/.config/system-wide/etc/zsh
 !/.config/system-wide/etc/zsh/**
 !/.gitignore.d
