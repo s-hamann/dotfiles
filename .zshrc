@@ -100,6 +100,7 @@ fi
 # some aliases
 alias o=xdg-open
 alias sudo='sudo ' # expand aliases after sudo
+alias vi='vim -p'
 
 
 # enable syntax highlighting in less

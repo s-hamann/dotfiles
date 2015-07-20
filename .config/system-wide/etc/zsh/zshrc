@@ -86,6 +86,8 @@ zle -N insert-last-typed-word;
 
 # use Ctrl+R for backward search in history
 bindkey '^R' history-incremental-pattern-search-backward
+# make . work in history search
+bindkey -M isearch '.' self-insert
 # use Ctrl+Y to insert the last string deleted by ^U or whatever
 bindkey -M viins '^Y' yank
 # use Alt+. to insert the last parameter from the previous command

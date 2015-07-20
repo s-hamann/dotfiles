@@ -123,6 +123,7 @@ CAPABILITY            38;5;22
 # archives {{{
 .apk                  91
 .cab                  91
+.msi                  91
 .tar                  91
 .tgz                  91
 .arj                  91
@@ -155,6 +156,7 @@ CAPABILITY            38;5;22
 .cpio                 91
 .7z                   91
 .rz                   91
+.xpi                  91
 # }}}
 
 # partition images {{{
