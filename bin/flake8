@@ -1,0 +1,27 @@
+#!/bin/bash
+# Simple wrapper around flake8 that tries to detect the python version used
+# by the file(s) to be checked and runs flake8 accordingly.
+
+# Store the command line options for later.
+opts=$@
+
+# Parse the command line parameters.
+while [[ $# -gt 0 ]]; do
+    if [[ "$1" != -* ]]; then
+        # $1 is a parameter without a leading -
+        # This must be an input file.
+        # Get the python interpreter from the first line,
+        # just python without a version is ignored.
+        interpreter=$(head -n1 $1 | \
+            grep --perl-regexp --only-matching '(?<=#!)/.*python[0-9].*$')
+        # An interpreter was found, do not check other files (if any).
+        [[ -n "${interpreter}" ]] && break
+    fi
+    shift
+done
+
+# If no interpreter could be detected, default to 'python'.
+[[ -z "${interpreter}" ]] && interpreter='python'
+
+# Run flake8 with the original command line parameters.
+${interpreter} -m flake8 ${opts}
