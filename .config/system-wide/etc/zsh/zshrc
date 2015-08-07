@@ -513,9 +513,10 @@ if [[ "$EUID" == 0 ]]; then
 	zstyle ':completion:*:processes'       command 'ps -e -o user,pid,cputime,command'
 	zstyle ':completion:*:processes-names' command 'ps ax -o command | grep -v "^\[.*\]$" |  uniq'
 else
-	# process completion of other users: only user processes
-	zstyle ':completion:*:processes'       command 'ps -au$USER -o pid,cputime,command'
-	zstyle ':completion:*:processes-names' command 'ps c -u ${USER} -o command | uniq'
+	# process completion of other users: only user processes, unless the
+	# current line starts with 'sudo'
+	zstyle ':completion:*:processes'       command '[[ ${BUFFER:0:4} == 'sudo' ]] && ps -e -o user,pid,cputime,command || ps -au$USER -o pid,cputime,command'
+	zstyle ':completion:*:processes-names' command '[[ ${BUFFER:0:4} == 'sudo' ]] && ps ax -o command | grep -v "^\[.*\]$" | uniq || ps c -u ${USER} -o command | uniq'
 fi
 # always show a list of processes, even if it is only one
 zstyle ':completion:*:*:(kill|killall):*'  force-list always
