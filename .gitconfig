@@ -17,9 +17,9 @@
 [color "grep"]
 	filename = 165 # purple
 	function = 202 # orange
-	linenumber = 221 # yellow
-	matchContext = 221 # yellow
-	matchSelected = 221 bold # yellow, bold
+	linenumber = 46 # green
+	matchContext = 221 ul # yellow, underlined
+	matchSelected = 221 bold ul # yellow, bold, underlined
 	selected = 230 # very light yellow
 	separator = 241 # grey
 [color "status"]
