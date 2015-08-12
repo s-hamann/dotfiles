@@ -169,6 +169,9 @@ export LESS_TERMCAP_ue=$'\E[0m' # end underline
 # coloured GCC warnings and errors
 export GCC_COLORS='error=01;31:warning=01;35:note=01;36:caret=01;32:locus=01:quote=01'
 
+# nice colours in grep
+export GREP_COLORS='sl=38;5;230:ms=1;4;38;5;221:mc=4;38;5;221:fn=38;5;165:ln=38;5;46:se=38;5;241'
+
 # }}}
 
 # History settings {{{
