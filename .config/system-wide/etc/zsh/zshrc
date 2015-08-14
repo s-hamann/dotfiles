@@ -262,8 +262,18 @@ autoload -Uz vcs_info
 # speed reasons. If set to a non empty value vcs_info is run.
 FORCE_RUN_VCS_INFO=1
 
+zmodload zsh/datetime
+
 precmd_vcs_info() {
+	# Run vcs_info and measure how long it takes.
+	local vcs_info_start vcs_info_finish
+	vcs_info_start=$EPOCHREALTIME
 	vcs_info
+	vcs_info_finish=$EPOCHREALTIME
+	# Update vcs_info_time with the measured time if this run was not
+	# aborted early by pre-get-data.
+	${vcs_info_timing} && vcs_info_time=$(( $vcs_info_finish - $vcs_info_start ))
+	unset vcs_info_timing
 }
 add-zsh-hook precmd precmd_vcs_info
 
@@ -335,6 +345,11 @@ zstyle ':vcs_info:*+pre-get-data:*' hooks pre-get-data
 }
 
 +vi-pre-get-data() {
+	# This variable is used to return the information whether timing should
+	# be measured or not. Default to true, change it to false later on if
+	# necessary.
+	vcs_info_timing=true
+
 	# Only Git and Mercurial support and need caching. Abort if any other
 	# VCS is used.
 	[[ "$vcs" != git && "$vcs" != hg ]] && return
@@ -347,9 +362,12 @@ zstyle ':vcs_info:*+pre-get-data:*' hooks pre-get-data
 	fi
 
 	# If we got to this point, running vcs_info was not forced, so now we
-	# default to not running it and selectively choose when we want to run
-	# it (ret=1 means run it, ret=0 means don't).
-	ret=1
+	# default to running it only if it was fast the last time.
+	# This choice may be overridden later on.
+	# (ret=1 means run it, ret=0 means don't)
+	[[ "${vcs_info_time}" -lt "${VCS_INFO_THRESHOLD:-0.25}" ]]
+	ret=$?
+
 	# If a git/hg command was run then run vcs_info as the status might
 	# need to be updated.
 	case "$(fc -ln $(($HISTCMD-1)))" in
@@ -360,6 +378,10 @@ zstyle ':vcs_info:*+pre-get-data:*' hooks pre-get-data
 			ret=0
 			;;
 	esac
+
+	if [[ ${ret} -ne 0 ]]; then
+		vcs_info_timing=false
+	fi
 }
 
 # }}}
