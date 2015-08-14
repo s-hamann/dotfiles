@@ -13,7 +13,7 @@ if isdirectory(expand('~/.vim/bundle/Vundle.vim'))
     "call vundle#begin('~/.vim/bundle/')
 
     " let Vundle manage itself, required
-    Plugin 'gmarik/Vundle.vim'
+    Plugin 'VundleVim/Vundle.vim'
 
     Plugin 'ervandew/supertab'
     Plugin 'rking/ag.vim'
