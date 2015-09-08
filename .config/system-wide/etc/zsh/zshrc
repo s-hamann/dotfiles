@@ -563,7 +563,21 @@ fi
 # always show a list of processes, even if it is only one
 zstyle ':completion:*:*:(kill|killall):*'  force-list always
 # do not offer processes already on the command line
-zstyle ':completion:*:*:(kill|killall):*'  ignore-line yes
+zstyle ':completion:*:*:(kill|killall):*'  ignore-line other
+# }}}
+
+# {{{
+# do not offer parameters already on the command line for these commands
+zstyle ':completion:*:(md5|sha*)sum:*' ignore-line other
+zstyle ':completion:*:diff:*' ignore-line other
+zstyle ':completion:*:colordiff:*' ignore-line other
+zstyle ':completion:*:chmod:*' ignore-line other
+zstyle ':completion:*:chown:*' ignore-line other
+zstyle ':completion:*:rm:*' ignore-line other
+zstyle ':completion:*:rmdir:*' ignore-line other
+zstyle ':completion:*:shred:*' ignore-line other
+zstyle ':completion:*:touch:*' ignore-line other
+zstyle ':completion:*:emerge:*' ignore-line other
 # }}}
 
 # sudo paths {{{
