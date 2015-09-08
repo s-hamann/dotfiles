@@ -11,6 +11,9 @@ autoload -Uz add-zsh-hook
 
 # Key Bindings {{{
 
+# use vi-style key bindings
+bindkey -v
+
 # create a zkbd compatible hash, but do not use zkbd itself
 # to add other keys to this hash, see: man 5 terminfo
 typeset -A key
