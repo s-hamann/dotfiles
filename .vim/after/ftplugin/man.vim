@@ -34,6 +34,10 @@ setlocal noswapfile
 " Disable persistent undo.
 setlocal noundofile
 
+" Wrap around when searching, this is disabled in macros/less.vim for some
+" reason.
+setlocal wrapscan
+
 " Start/end of file, see macros/less.vim
 map <Home> g
 map <End> G
