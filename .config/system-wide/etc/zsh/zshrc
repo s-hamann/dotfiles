@@ -402,7 +402,7 @@ precmd_prompt_base() {
 			# other users are green
 			user_colour="%F{green}"
 		fi
-		if [[ -z "${SSH_CLIENT}" && -z "${SSH_CLIENT2}" ]]; then
+		if [[ -z "${SSH_CONNECTION}" ]]; then
 			# local shell is blue
 			host_colour="%B%F{blue}"
 		else
