@@ -110,8 +110,8 @@ export LESSCOLOR='yes'
 [[ -e /usr/bin/vimmanpager ]] && export MANPAGER=/usr/bin/vimmanpager
 
 # add completion for python2 and similar symlinks
-for pv in ${$(ls /usr/bin/python[0-9]{,.[0-9]})#/usr/bin/python}; do
-	which "python${pv}" &>/dev/null && compdef "python${pv}"=python
+for pv in /usr/bin/python[0-9]{,.[0-9]}(N); do
+	which "${pv#/usr/bin/}" &>/dev/null && compdef "${pv#/usr/bin/}"=python
 done
 
 
