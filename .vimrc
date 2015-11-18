@@ -83,8 +83,10 @@ filetype plugin indent on
 " Set the proper codes for italic text.
 " This should really be done in a terminfo file, but setting TERM to some
 " non-standard values causes too much trouble.
-set t_ZH=[3m
-set t_ZR=[23m
+if &term =~# '^xterm'
+    exe "set t_ZH=\e[3m"
+    exe "set t_ZR=\e[23m"
+endif
 
 if has("gui") || &t_Co > 255
     " silent! colorscheme candycode
@@ -147,7 +149,7 @@ if has('statusline') && has('autocmd')
     " Note: Setting colorscheme or syntax clears the user-defined colours.
     " User1: red
     " User2: green
-    " User3: Yellow
+    " User3: yellow
     " User4: blue
     " User5: purple
     " User6: cyan
