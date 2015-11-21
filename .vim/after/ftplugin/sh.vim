@@ -5,6 +5,9 @@ let g:sh_fold_enabled = 5
 if executable('shellcheck')
     setlocal makeprg=shellcheck\ -f\ gcc\ %
     if has('autocmd')
-        au BufWritePost * :silent make | redraw! | cwindow 3
+        augroup AutoShellcheck
+            autocmd! BufWritePre <buffer> let b:modified=&modified
+            autocmd! BufWritePost <buffer> if b:modified | silent make | redraw! | cwindow 3
+        augroup END
     endif
 endif
