@@ -28,7 +28,7 @@ if has('autocmd')
         " by gitgutter, Flake8 and others and is expected to be there most of
         " the time.
         autocmd! WinEnter <buffer> 
-                \ let s:leftcols = &foldenable * &foldcolumn + 2 + (or(&number, &relativenumber) * max([&numberwidth, &number * strlen(line('$'))])) |
+                \ let s:leftcols = &foldenable * &foldcolumn + 2 + (or(&number, &relativenumber) * (max([&numberwidth, &number * strlen(line('$'))]) + 1)) |
                 \ if winwidth(0) < &columns && winwidth(0) < 79 + s:leftcols && &columns >= 79 + s:leftcols |
                 \     exec 'vertical resize ' . (79 + s:leftcols) |
                 \ endif
