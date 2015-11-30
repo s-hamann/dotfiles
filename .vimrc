@@ -126,9 +126,6 @@ endif
 " Syntax highlighting settings {{{
 syntax on " Enable syntax highlighting.
 syntax spell toplevel " Do spell checking for all text that is not in a syntax item.
-if $USER !=# 'root'
-    set spellfile=~/.vim/dict.add " Add new words to this file (use zg or zw to add or remove words or edit the file and run :mkspell '%').
-endif
 set synmaxcol=512 " Don't color long lines (too slow).
 if (&termencoding ==# 'utf-8' || &encoding ==# 'utf-8') && version >= 700
     set list listchars=trail:·,tab:→\ ,nbsp:␣ " Highlight trailing spaces, tabs and non-breaking spaces.
