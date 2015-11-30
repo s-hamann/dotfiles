@@ -116,6 +116,11 @@ set background=dark " Set colours for a dark background.
 set lazyredraw " Don't redraw while running macros.
 set ttyfast " Better behaviour
 set linebreak " When (visually) wrapping long lines, do it at a nice position.
+
+if has('autocmd')
+    " Make vimdiff respect the global wrap setting
+    autocmd FilterWritePre * if &diff | setlocal wrap< | endif
+endif
 " }}}
 
 " Syntax highlighting settings {{{
