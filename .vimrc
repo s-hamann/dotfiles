@@ -23,7 +23,6 @@ if isdirectory(expand('~/.vim/bundle/Vundle.vim'))
     Plugin 'tpope/vim-repeat'
     Plugin 'tpope/vim-vinegar'
     Plugin 'fidian/hexmode'
-    Plugin 'sjl/gundo.vim'
     Plugin 'ciaranm/securemodelines'
     Plugin 'chikamichi/mediawiki.vim'
     if $USER !=# 'root'
@@ -39,6 +38,12 @@ if isdirectory(expand('~/.vim/bundle/Vundle.vim'))
             Plugin 'davidhalter/jedi-vim'
             Plugin 'SirVer/ultisnips'
             Plugin 'honza/vim-snippets'
+            if version >= 703
+                Plugin 'sjl/gundo.vim'
+            endif
+        endif
+        if version >= 700 && executable('ctags')
+            Plugin 'majutsushi/tagbar'
         endif
     endif
 

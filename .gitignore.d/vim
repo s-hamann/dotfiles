@@ -8,6 +8,7 @@
 !/.config/vcsh/hooks-enabled
 !/.config/vcsh/hooks-available/vim.*
 !/.config/vcsh/hooks-enabled/vim.*
+!/.ctags
 !/.gitignore.d
 !/.gitignore.d/vim
 !/.gvimrc
