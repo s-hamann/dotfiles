@@ -27,8 +27,16 @@ if has('autocmd')
         " The sign column is always 2 characters wide if present. It is used
         " by gitgutter, Flake8 and others and is expected to be there most of
         " the time.
+        " The width of the number column is tricky. If number is set, the
+        " width is numberwidth or the greatest length of the line number of
+        " all lines, whichever is greater. As the last line has the highest
+        " an therefore longest line number, it is used instead of the maximum
+        " over all line numbers.
+        " However, there is also a space between the number column and the
+        " buffer contents, which is already taken into account by numberwidth,
+        " but not by the strlen of the line numbers.
         autocmd! WinEnter <buffer> 
-                \ let s:leftcols = &foldenable * &foldcolumn + 2 + (or(&number, &relativenumber) * (max([&numberwidth, &number * strlen(line('$'))]) + 1)) |
+                \ let s:leftcols = &foldenable * &foldcolumn + 2 + (or(&number, &relativenumber) * (max([&numberwidth, (&number * strlen(line('$'))) + 1]))) |
                 \ if winwidth(0) < &columns && winwidth(0) < 79 + s:leftcols && &columns >= 79 + s:leftcols |
                 \     exec 'vertical resize ' . (79 + s:leftcols) |
                 \ endif
