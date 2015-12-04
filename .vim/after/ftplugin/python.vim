@@ -46,7 +46,7 @@ if has('autocmd')
         " the window at this stage. The following autocmd will resize the
         " tagbar window to it's initial size. This solution is decidedly ugly,
         " but it's the best I could come up with.
-        autocmd! BufNew __Tagbar__
+        autocmd! BufWinEnter __Tagbar__
                 \ if g:tagbar_vertical == 0 |
                 \     exec 'vertical resize ' . g:tagbar_width |
                 \ else |
