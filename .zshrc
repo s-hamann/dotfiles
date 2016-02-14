@@ -131,5 +131,8 @@ function nmap-top-ports() {
     grep "^\S\+\s\+[0-9]\+/${proto}" /usr/share/nmap/nmap-services | sort -nrk 3 | sed "s/^\S\+\s\+\([0-9]\+\)\/${proto}.*/\1/" | head -n $1 | tr '\n' ',' | sed 's/,$//'
 }
 
+if which tmux &>/dev/null && [[ -n "${SSH_TTY}" && -z "${TMUX}" ]]; then
+    tmux has -t main &>/dev/null && tmux attach -t main || tmux new -s main
+fi
 
 [[ -e "${HOME}/.zshrc.local" ]] && source "${HOME}/.zshrc.local"
