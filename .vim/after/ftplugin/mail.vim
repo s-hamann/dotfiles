@@ -1,6 +1,23 @@
 " enable spell checking
-set spell
-set spelllang=de_20
+setlocal spell
+setlocal spelllang=de_20
 
 " disable folding
-set nofoldenable
+setlocal nofoldenable
+
+" disable line numbers
+setlocal nonumber
+setlocal norelativenumber
+
+if has('gui')
+    " disable the menu bar
+    setlocal guioptions-=m
+    " disable the toolbar
+    set guioptions-=T
+    " disable all scrollbars
+    set guioptions-=r
+    set guioptions-=R
+    set guioptions-=l
+    set guioptions-=L
+    set guioptions-=b
+endif
