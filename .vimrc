@@ -105,6 +105,7 @@ if has("gui") || &t_Co > 255
     " else
     "     silent! colorscheme wombat
     " endif
+    " let g:jellybeans_use_term_italics = 1
     " silent! colorscheme jellybeans
     let g:gruvbox_contrast_dark = 'hard'
     let g:gruvbox_italic = 1
@@ -616,9 +617,9 @@ let g:UltiSnipsExandTrigger = "<tab>"
 " The trigger used to display all snippets that could possibly match
 let g:UltiSnipsListSnippets = "<F3>"
 " The triger used to jump forward to the next placeholder
-let g:UltiSnipsJumpForwardTrigger = "<tab>"
+let g:UltiSnipsJumpForwardTrigger = "`"
 " The trigger used to jump back inside a snippet
-let g:UltiSnipsJumpBackwardTrigger = "<s-tab>"
+let g:UltiSnipsJumpBackwardTrigger = "¬"
 " }}}
 
 " }}}
