@@ -524,8 +524,6 @@ let g:SignatureMarkerTextHLDynamic = 1
 " }}}
 
 " GitGutter {{{
-" Use real grep, not an alias.
-let g:gitgutter_escape_grep = 1
 " Change some mappings.
 nmap <leader>hp <Plug>GitGutterPrevHunk
 nmap <leader>hn <Plug>GitGutterNextHunk
