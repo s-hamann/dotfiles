@@ -16,7 +16,7 @@ if isdirectory(expand('~/.vim/bundle/Vundle.vim'))
     Plugin 'VundleVim/Vundle.vim'
 
     Plugin 'ervandew/supertab'
-    Plugin 'rking/ag.vim'
+    Plugin 'mileszs/ack.vim'
     Plugin 'tpope/vim-commentary'
     Plugin 'tpope/vim-speeddating'
     Plugin 'tpope/vim-surround'
@@ -516,6 +516,13 @@ endif
 " }}}
 
 " Plugin Settings {{{
+
+" ack.vim {{{
+" Prefer ag over ack, if available
+if executable('ag')
+    let g:ackprg = 'ag --vimgrep'
+endif
+" }}}
 
 " Signature {{{
 " Highlight marks annd markers based on the state of GitGutter.
