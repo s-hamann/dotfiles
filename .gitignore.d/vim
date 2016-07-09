@@ -1,6 +1,7 @@
 *
 !/bin
 !/bin/flake8
+!/bin/purge_vim_undodir.sh
 !/.config
 !/.config/flake8
 !/.config/vcsh
