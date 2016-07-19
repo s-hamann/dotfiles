@@ -16,7 +16,9 @@ if isdirectory(expand('~/.vim/bundle/Vundle.vim'))
     Plugin 'VundleVim/Vundle.vim'
 
     Plugin 'ervandew/supertab'
-    Plugin 'mileszs/ack.vim'
+    if executable('ack') || executable('ag')
+        Plugin 'mileszs/ack.vim'
+    endif
     Plugin 'tpope/vim-commentary'
     Plugin 'tpope/vim-speeddating'
     Plugin 'tpope/vim-surround'
@@ -31,7 +33,9 @@ if isdirectory(expand('~/.vim/bundle/Vundle.vim'))
         Plugin 'nvie/vim-flake8'
         Plugin 'hynek/vim-python-pep8-indent'
         if has('signs')
-            Plugin 'airblade/vim-gitgutter'
+            if executable('git')
+                Plugin 'airblade/vim-gitgutter'
+            endif
             Plugin 'kshenoy/vim-signature'
         endif
         if has('python') || has('python3')
