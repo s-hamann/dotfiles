@@ -9,8 +9,8 @@ fi
 
 if [[ $# -eq 0 ]]; then
 
-    vcsh base for-each-ref refs/remotes --format='%(refname)' | while read line; do
-        echo ${line#refs/remotes/*/}
+    vcsh base for-each-ref refs/remotes --format='%(refname)' | while read -r line; do
+        echo "${line#refs/remotes/*/}"
     done
 
 else
@@ -32,5 +32,8 @@ else
 
     # clone it
     vcsh clone "${url}" "${branch}" -b "${branch}"
+
+    # make git ignore other branches when fetching
+    vcsh "${branch}" config --local remote.origin.fetch "+refs/heads/${branch}:refs/remotes/origin/${branch}"
 
 fi
