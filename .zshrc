@@ -79,10 +79,18 @@ elif [[ -e /etc/profile.d/vte-2.91.sh ]]; then
 fi
 
 # zsh-syntax-highlighting plugin
-if [[ -f "/usr/share/zsh/site-contrib/zsh-syntax-highlighting/zsh-syntax-highlighting.zsh" ]]; then
-    source /usr/share/zsh/site-contrib/zsh-syntax-highlighting/zsh-syntax-highlighting.zsh
-    ZSH_SYNTAX_HIGHLIGHTERS=(main brackets)
-fi
+zsh_syntax_highlighting_paths=(
+"/usr/share/zsh/site-contrib/zsh-syntax-highlighting/" # Gentoo
+"/usr/share/zsh/plugins/zsh-syntax-highlighting/" # Arch Linux
+)
+for p in "${zsh_syntax_highlighting_paths[@]}"; do
+    if [[ -f "${p}/zsh-syntax-highlighting.zsh" ]]; then
+        source "${p}/zsh-syntax-highlighting.zsh"
+        ZSH_SYNTAX_HIGHLIGHTERS=(main brackets)
+        break
+    fi
+done
+unset p zsh_syntax_highlighting_paths
 
 # autojump plugin
 if [[ -f '/etc/profile.d/autojump.zsh' ]]; then
