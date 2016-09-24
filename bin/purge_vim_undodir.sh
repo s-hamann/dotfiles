@@ -1,5 +1,8 @@
 #!/bin/bash
 
+# Do not try to match a literal * if there are no undo files
+shopt -s nullglob
+
 if [[ "$1" == '-h' || "$1" == '--help' ]]; then
     echo "Usage: $(basename -- "$0") [<path>, [<path>, ...]]"
     echo "  where <path> is a directory containing vim's undo files,"
