@@ -46,9 +46,6 @@ if isdirectory(expand('~/.vim/bundle/Vundle.vim'))
                 Plugin 'sjl/gundo.vim'
             endif
         endif
-        if version >= 700 && executable('ctags')
-            Plugin 'majutsushi/tagbar'
-        endif
     endif
 
     Plugin 'tomasr/molokai' " color scheme

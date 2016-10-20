@@ -40,18 +40,6 @@ if has('autocmd')
                 \ if winwidth(0) < &columns && winwidth(0) < 79 + s:leftcols && &columns >= 79 + s:leftcols |
                 \     exec 'vertical resize ' . (79 + s:leftcols) |
                 \ endif
-        " The WinEnter event above triggers when opening the tagbar and
-        " resizes the tagbar window, which is undesirable. It does not seem
-        " to be possible, to distinguish opening tagbar from simply splitting
-        " the window at this stage. The following autocmd will resize the
-        " tagbar window to it's initial size. This solution is decidedly ugly,
-        " but it's the best I could come up with.
-        autocmd! BufWinEnter __Tagbar__
-                \ if g:tagbar_vertical == 0 |
-                \     exec 'vertical resize ' . g:tagbar_width |
-                \ else |
-                \     exec 'resize ' . g:tagbar_vertical |
-                \ endif
     augroup END
 else
     " This is the simple alternative.
