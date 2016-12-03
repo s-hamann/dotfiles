@@ -78,6 +78,64 @@ elif [[ -e /etc/profile.d/vte-2.91.sh ]]; then
     source /etc/profile.d/vte-2.91.sh
 fi
 
+
+# send a notification if a long-running command finishes
+# Note: only set this up if an X session is running
+if [[ -n $DISPLAY ]] && command -v xdotool &>/dev/null && command -v notify-send &>/dev/null; then
+
+    # returns 0 iff the shell running this function is in the foreground
+    function shell_has_focus {
+        if [[ "${WINDOWID}" != "$(xdotool getactivewindow)" ]]; then
+            # active window is not this window
+            return 1
+        fi
+        # TODO: get current tab inside the terminal
+        if [[ -n "${TMUX}" ]]; then
+            # the shell seems to be running inside a tmux session
+            # get the active pane of this tmux session
+            # Note: using quotes arount the following expression will frag it up
+            active_pane=${${${(f)"$(tmux list-windows -F '#{window_active} #{session_attached} #{pane_id}')"}:#0 *}##* }
+            if [[ "${TMUX_PANE}" != "${active_pane}" ]]; then
+                return 1
+            fi
+        fi
+        return 0
+    }
+
+    function notify_preexec {
+        notify_command="$1"
+        notify_timestamp="$EPOCHSECONDS"
+    }
+
+    function notify_postexec {
+        # grab the exit code of the last command, needs to be the very first line
+        local exit_code=$?
+        # check if there was a last command at all
+        [[ -z ${notify_command} ]] && return 0
+        # calculate how long it did take to finish
+        local run_time=$((EPOCHSECONDS - notify_timestamp))
+
+        # check if the command did run for a long time and if the terminal is in the background
+        if [[ "${run_time}" -ge "${NOTIFY_THRESHOLD:-15}" ]] && ! shell_has_focus; then
+            if [[ "${exit_code}" -eq 0 ]]; then
+                title='Command completed'
+                icon='dialog-information'
+            else
+                title='Command failed'
+                icon='dialog-warning'
+            fi
+            notify-send --icon="${icon}" "${title}" "${notify_command}"
+        fi
+
+        # clean up the environment
+        unset notify_command notify_timestamp
+    }
+
+    autoload add-zsh-hook
+    add-zsh-hook preexec notify_preexec
+    add-zsh-hook precmd notify_postexec
+fi
+
 # zsh-syntax-highlighting plugin
 zsh_syntax_highlighting_paths=(
 "/usr/share/zsh/site-contrib/zsh-syntax-highlighting/" # Gentoo
