@@ -609,8 +609,6 @@ let g:SuperTabLongestEnhanced = 1
 " Notes:
 " * Tab can not be distinguished from Ctrl+I, not even in gvim
 " * Ctrl+Tab can not be distinguished from Tab in the terminal
-" Cycle backwards in the popup menu with Shift+Tab.
-inoremap <expr> <S-Tab> pumvisible() ? "\<C-P>" : "\<S-Tab>"
 " Make <CR> select the highlighted match if the menu is open.
 inoremap <expr> <CR> pumvisible() ? "\<C-y>" : "\<CR>"
 " Make <ESC> close the menu, and makes the arrow keys go crazy.
