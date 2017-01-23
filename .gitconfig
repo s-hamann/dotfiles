@@ -42,6 +42,9 @@
 [core]
 	excludesfile = ~/.gitignore
 	whitespace = tabwidth=4
+[rebase]
+	autostash = true
+	autosquash = true
 [include]
 	path = ~/.gitidentity
 	path = ~/.gitconfig.local
