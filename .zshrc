@@ -1,3 +1,17 @@
+# automatically start X11 when running on TTY 1
+if [[ -o login && -t 0 && "${TTY}" == '/dev/tty1' && -z "$DISPLAY" ]] && command -v startx &>/dev/null; then
+    exec startx
+fi
+# Note:
+# In order to automatically unlock the gnome keyring, something like the following needs to be added to /etc/pam.d/login
+# -----
+# # automatically start and unlock gnome keyring
+# auth       [default=1 success=ignore] pam_succeed_if.so quiet tty = /dev/tty1 user ingroup users
+#   auth       optional pam_gnome_keyring.so
+# session    [default=1 success=ignore] pam_succeed_if.so quiet tty = /dev/tty1 user ingroup users
+#   session    optional pam_gnome_keyring.so auto_start
+# -----
+
 # Completion settings
 
 # Notes:
