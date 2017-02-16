@@ -55,7 +55,7 @@ if filereadable(glob("~/bin/flake8"))
     let g:flake8_cmd=glob("~/bin/flake8")
 endif
 " Automatically run Flake8 when saving files.
-if has('autocmd')
+if has('autocmd') && exists('*Flake8')
     augroup AutoFlake
         autocmd! BufWritePre <buffer> let b:modified=&modified
         autocmd! BufWritePost <buffer> if b:modified | silent call Flake8() | endif
