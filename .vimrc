@@ -20,7 +20,6 @@ if isdirectory(expand('~/.vim/bundle/Vundle.vim'))
         Plugin 'mileszs/ack.vim'
     endif
     Plugin 'tpope/vim-commentary'
-    Plugin 'tpope/vim-speeddating'
     Plugin 'tpope/vim-surround'
     Plugin 'tpope/vim-repeat'
     Plugin 'tpope/vim-vinegar'
