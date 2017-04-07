@@ -26,6 +26,7 @@ if isdirectory(expand('~/.vim/bundle/Vundle.vim'))
     Plugin 'fidian/hexmode'
     Plugin 'ciaranm/securemodelines'
     Plugin 'chikamichi/mediawiki.vim'
+    Plugin 'plasticboy/vim-markdown'
     if $USER !=# 'root'
         Plugin 'luochen1990/rainbow'
         Plugin 'hdima/python-syntax'
