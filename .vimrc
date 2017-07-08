@@ -48,15 +48,15 @@ if isdirectory(expand('~/.vim/bundle/Vundle.vim'))
         endif
     endif
 
-    Plugin 'tomasr/molokai' " color scheme
-    Plugin 'trapd00r/neverland-vim-theme' " color scheme
-    Plugin 'tpope/vim-vividchalk' " color scheme
-    Plugin 'sjl/badwolf' " color scheme
-    Plugin 'nanotech/jellybeans.vim' " color scheme
+    " Plugin 'tomasr/molokai' " color scheme
+    " Plugin 'trapd00r/neverland-vim-theme' " color scheme
+    " Plugin 'tpope/vim-vividchalk' " color scheme
+    " Plugin 'sjl/badwolf' " color scheme
+    " Plugin 'nanotech/jellybeans.vim' " color scheme
     Plugin 'morhetz/gruvbox' " color scheme
-    Plugin 'candycode.vim' " color scheme
-    Plugin 'wombat256.vim' " color scheme
-    Plugin 'Wombat' " color scheme
+    " Plugin 'candycode.vim' " color scheme
+    " Plugin 'wombat256.vim' " color scheme
+    " Plugin 'Wombat' " color scheme
 
     if (filereadable(glob("~/.vim/plugins.local")))
         source ~/.vim/plugins.local
