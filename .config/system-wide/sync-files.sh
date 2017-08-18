@@ -107,7 +107,7 @@ find "${base_dir}" -mindepth 2 -name "*.install" -prune -o -type f -print -o -ty
         to_system=true
     else
         # the target file does exist, check if it is accessible for normal users
-        [[ -e "${target_file}" ]] && sudo='' || sudo='sudo'
+        [[ -e "${target_filename}" ]] && sudo='' || sudo='sudo'
         # check which file is newer
         if ${sudo} [ "${filename}" -ot "${target_filename}" ]; then
             # target file is newer, copy it to the repository
