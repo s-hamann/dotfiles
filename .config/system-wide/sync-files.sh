@@ -48,12 +48,24 @@ elif [[ "$(uname -o)" == 'Cygwin' ]]; then
     esac
     unset win_version
     VERSION="$(reg query "HKLM\Software\Microsoft\Windows NT\CurrentVersion" /v "CSDVersion" | sed 's/Service Pack ([0-9])/sp\1/')"
+elif [[ "$(uname -o)" == 'Android' ]]; then
+    OS='android'
+    if [[ "${LD_LIBRARY_PATH}" == *termux* ]]; then
+        # this is still android, but apparently a termux environment
+        OS='termux'
+        # $PREFIX should be set by termux
+        [[ -n "${PREFIX}" ]] && INSTALL_PREFIX="${PREFIX}"
+    fi
+    # TODO: get the ROM name in $FLAVOUR
+    # get the build number
+    VERSION="$(getprop ro.build.version.release)"
 fi
 [[ -z "${OS}" ]] && OS="unknown"
 [[ -z "${FLAVOUR}" ]] && FLAVOUR="unknown"
 [[ -z "${FLAVOUR_LIKE}" ]] && FLAVOUR_LIKE="${FLAVOUR}"
 [[ -z "${VERSION}" ]] && VERSION="unknown"
 
+[[ -z "${INSTALL_PREFIX}" ]] && INSTALL_PREFIX=''
 
 if ! command -v sudo &>/dev/null; then
     no_sudo_warning=true
@@ -99,6 +111,7 @@ find "${base_dir}" -mindepth 2 -name "*.install" -prune -o -type f -print -o -ty
     # source the .install file, if it is there
     [[ -e "${filename}.install" ]] && source "${filename}.install"
 
+    target_filename="${INSTALL_PREFIX}/${target_filename}"
     target_dir="$(dirname -- "${target_filename}")"
 
     # find out if the local copy should go to the system or the other way round
