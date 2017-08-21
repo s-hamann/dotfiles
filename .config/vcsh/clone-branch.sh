@@ -18,7 +18,7 @@ else
     branch="$1"
 
     # check if $branch is already tracked
-    if vcsh list | grep --quiet -Fx "${branch}"; then
+    if vcsh list | grep -F -q -x "${branch}"; then
         echo "fatal: vcsh already tracks '${branch}'" >&2
         exit 2
     fi

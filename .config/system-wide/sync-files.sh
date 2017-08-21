@@ -104,11 +104,13 @@ find "${base_dir}" -mindepth 2 -name "*.install" -prune -o -type f -print -o -ty
     if [[ -e "${ignore_file}" ]]; then
         while read pattern; do
             # skip the current file if the pattern matches
+            # shellcheck disable=SC2053
             [[ "${base_filename}" == ${pattern} ]] && continue 2
         done < "${ignore_file}"
     fi
 
     # source the .install file, if it is there
+    # shellcheck disable=SC1090
     [[ -e "${filename}.install" ]] && source "${filename}.install"
 
     target_filename="${INSTALL_PREFIX}/${target_filename}"
@@ -162,8 +164,8 @@ find "${base_dir}" -mindepth 2 -name "*.install" -prune -o -type f -print -o -ty
         # keep permissions and times, but not ownership
         ${sudo} rsync --update --links --perms --times "${target_filename}" "${filename}"
         # make sure the copy is owned by the user, not root
-        if [[ "$(stat -c "%U:%G" "${filename}")" != "${USER}:$(id --group --name)" ]]; then
-            ${sudo} chown "${USER}:$(id --group --name)" -- "${filename}"
+        if [[ "$(stat -c "%U:%G" "${filename}")" != "${USER}:$(id -g -n)" ]]; then
+            ${sudo} chown "${USER}:$(id -g -n)" -- "${filename}"
         fi
     fi
 
