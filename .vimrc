@@ -319,7 +319,7 @@ noremap! <F1> <ESC>
 set pastetoggle=<F2> " Toggle paste mode with F2.
 
 " Make w!! get the permissions to save the current file.
-if !has('gui') && $USER !=# 'root'
+if !has('gui') && $USER !=# 'root' && executable('sudo') && executable('tee')
     cnoremap w!! w !sudo tee "%" > /dev/null <bar> set nomodified
     "command -nargs=0 W w !sudo tee "%" > /dev/null | set nomodified
 endif
