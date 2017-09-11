@@ -390,36 +390,60 @@ zstyle ':vcs_info:*+pre-get-data:*' hooks pre-get-data
 
 # }}}
 
-# allow substitution of ${promt_base} and ${vcs_info_msg_0_} in the prompt
-setopt promptsubst
+# Prompt on the left side {{{
 
-precmd_prompt_base() {
-    if [[ -z "${VCSH_REPO_NAME}" ]]; then
-        # colourise user and hostname
-        if [[ "${EUID}" == 0 ]]; then
-            # root is red
-            user_colour="%B%F{red}"
-        else
-            # other users are green
-            user_colour="%F{green}"
+# It works like this: The prompt consists of the varying base, the current path
+# and, possibly, information about a VCS repository.  The base prompt allows for
+# the following modifications:
+# * $zsh_prompt_user - formatting of the user name
+# * $zsh_prompt_host - formatting of the host name
+# * $zsh_prompt_base - an associative array. If the key exists as a non-empty
+#    environment variable, the value is used as the prompt base. If multiple
+#    keys match, only one of them is honoured. Which one, however, is undefined.
+
+# set the default formatting of the user name in the prompt
+if [[ "${EUID}" == 0 ]]; then
+    # root is red
+    zsh_prompt_user="%B%F{red}"
+else
+    # other users are green
+    zsh_prompt_user="%F{green}"
+fi
+
+# set the default formatting of the host name in the prompt
+if [[ -z "${SSH_CONNECTION}" ]]; then
+    # local shell is blue
+    zsh_prompt_host="%B%F{blue}"
+else
+    # remote connection is yellow
+    zsh_prompt_host="%B%F{yellow}"
+fi
+
+# allow substitution of variables in the prompt
+setopt prompt_subst
+
+typeset -A zsh_prompt_base
+# default base prompt: user@hostname
+zsh_prompt_base[ZSH_DEFAULT_PROMPT]='${zsh_prompt_user}%n%f%k%b%u%s@${zsh_prompt_host}%m%f%k%b%u%s'
+
+precmd_prompt() {
+    # set the default prompt base
+    local prompt_base="${zsh_prompt_base[ZSH_DEFAULT_PROMPT]}"
+    # check all array keys in $zsh_prompt_base
+    for var in "${(@k)zsh_prompt_base}"; do
+        # check if the key is an environment variable
+        if [[ -n "${(P)var}" ]]; then
+            # set the prompt base from zsh_prompt_base
+            prompt_base="${zsh_prompt_base[$var]}"
+            break
         fi
-        if [[ -z "${SSH_CONNECTION}" ]]; then
-            # local shell is blue
-            host_colour="%B%F{blue}"
-        else
-            # remote connection is yellow
-            host_colour="%B%F{yellow}"
-        fi
-        prompt_base="${user_colour}%n%f%b@${host_colour}%m%f%b"
-        unset host_colour user_colour
-    else
-        prompt_base="%F{yellow}${VCSH_REPO_NAME}%f"
-    fi
+    done
+    # put the actual prompt together
+    PS1="${prompt_base}:%B%F{black}%2~%f%b\${vcs_info_msg_0_}%#"
 }
-add-zsh-hook precmd precmd_prompt_base
+add-zsh-hook precmd precmd_prompt
 
-# Regular prompt
-PS1="\${prompt_base}:%B%F{black}%2~%f%b\${vcs_info_msg_0_}%#"
+# }}}
 
 # Prompt on the right side {{{
 function set_RPS1 {

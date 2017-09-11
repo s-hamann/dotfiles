@@ -93,6 +93,10 @@ elif [[ -e /etc/profile.d/vte-2.91.sh ]]; then
 fi
 
 
+# set the vcsh-specific base prompt
+zsh_prompt_base[VCSH_REPO_NAME]='%F{yellow}${VCSH_REPO_NAME}%f'
+
+
 # send a notification if a long-running command finishes
 # Note: only set this up if an X session is running
 if [[ -n $DISPLAY ]] && command -v xdotool &>/dev/null && command -v notify-send &>/dev/null; then
