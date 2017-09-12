@@ -656,5 +656,6 @@ alias ls='ls --color=auto'
 alias ll='ls -lh'
 alias grep='grep --color=auto'
 alias df='df -h'
+alias ip='ip -c'
 
 # }}}
