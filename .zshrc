@@ -158,6 +158,7 @@ fi
 zsh_syntax_highlighting_paths=(
 "/usr/share/zsh/site-contrib/zsh-syntax-highlighting/" # Gentoo
 "/usr/share/zsh/plugins/zsh-syntax-highlighting/" # Arch Linux
+"/usr/share/zsh-syntax-highlighting/" # Debian
 )
 for p in "${zsh_syntax_highlighting_paths[@]}"; do
     if [[ -f "${p}/zsh-syntax-highlighting.zsh" ]]; then
