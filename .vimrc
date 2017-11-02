@@ -297,6 +297,7 @@ if $USER !=# 'root'
     set tags=./tags;tags " Files to scan for tags (; - scan parent directories)
 endif
 let g:tex_flavor='latex' " .tex files are always LaTeX.
+set directory=~/.vim/.swp// " Create swap files in ~/.vim/.swp only. They may leak information when scattered around the filesystem
 set updatetime=1000 " Update swap files after one second idle time.
 set shortmess+=I " Do not show the intro message.
 
