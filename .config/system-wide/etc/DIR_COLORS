@@ -15,30 +15,24 @@
 # against the TERM environment variable to determine if it is colorizable.
 TERM Eterm
 TERM ansi
-TERM color-xterm
+TERM *color*
 TERM con[0-9]*x[0-9]*
 TERM cons25
 TERM console
 TERM cygwin
 TERM dtterm
-TERM eterm-color
 TERM gnome
-TERM gnome-256color
 TERM hurd
 TERM jfbterm
 TERM konsole
 TERM kterm
 TERM linux
 TERM linux-c
-TERM mach-color
-TERM mach-gnu-color
 TERM mlterm
 TERM putty
-TERM putty-256color
 TERM rxvt*
 TERM screen*
 TERM st
-TERM st-256color
 TERM terminator
 TERM tmux*
 TERM vt100
@@ -64,7 +58,7 @@ TERM xterm*
 #DOOR 01;35	# door
 #BLK 40;33;01	# block device driver
 #CHR 40;33;01	# character device driver
-#ORPHAN 01;05;37;41  # orphaned syminks
+#ORPHAN 01;05;37;41  # symlink to nonexistent file, or non-stat'able file ...
 #MISSING 01;05;37;41 # ... and the files they point to
 #SETUID 37;41	# file that is setuid (u+s)
 #SETGID 30;43	# file that is setgid (g+s)
@@ -100,23 +94,31 @@ CAPABILITY            38;5;22
 
 # archives {{{
 .apk                  91
-.cab                  91
 .msi                  91
 .tar                  91
 .tgz                  91
+.arc                  91
 .arj                  91
 .taz                  91
+.lza                  91
+.lz4                  91
 .lzh                  91
 .lzma                 91
 .tlz                  91
 .txz                  91
+.tzo                  91
+.t7z                  91
 .zip                  91
 .z                    91
 .Z                    91
 .dz                   91
 .gz                   91
+.lrz                  91
 .lz                   91
+.lzo                  91
 .xz                   91
+.zst                  91
+.tzst                 91
 .bz2                  91
 .bz                   91
 .tbz                  91
@@ -129,12 +131,18 @@ CAPABILITY            38;5;22
 .ear                  91
 .sar                  91
 .rar                  91
+.alz                  91
 .ace                  91
 .zoo                  91
 .cpio                 91
 .7z                   91
 .rz                   91
 .xpi                  91
+.cab                  91
+.wim                  91
+.swm                  91
+.dwm                  91
+.esd                  91
 # }}}
 
 # partition images {{{
@@ -158,6 +166,8 @@ CAPABILITY            38;5;22
 .jpeg                 38;5;97
 .jpg                  38;5;97
 .JPG                  38;5;97
+.mjpg                 38;5;97
+.mjpeg                38;5;97
 .mng                  38;5;97
 .nth                  38;5;97
 .pbm                  38;5;97
@@ -278,6 +288,7 @@ CAPABILITY            38;5;22
 .xml                  38;5;178
 .yml                  38;5;178
 .yaml                 38;5;178
+.ics                  38;5;178
 .vcf                  38;5;178
 .vcard                38;5;178
 # }}}
