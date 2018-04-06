@@ -251,6 +251,12 @@ setopt interactive_comments
 # also, >> does not create new files (again, >>! or >>|)
 setopt no_clobber
 
+# disable weird output freezing with ctrl+s/ctrl+q
+setopt noflowcontrol
+
+# disable =command to full path expansion
+setopt noequals
+
 # }}}
 
 # Crazy Prompt Settings {{{
