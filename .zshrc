@@ -112,7 +112,7 @@ if [[ -n $DISPLAY ]] && command -v xdotool &>/dev/null && command -v notify-send
             # the shell seems to be running inside a tmux session
             # get the active pane of this tmux session
             # Note: using quotes arount the following expression will frag it up
-            active_pane=${${${(f)"$(tmux list-windows -F '#{window_active} #{session_attached} #{pane_id}')"}:#0 *}##* }
+            local active_pane=${${${(f)"$(tmux list-windows -F '#{window_active} #{session_attached} #{pane_id}')"}:#0 *}##* }
             if [[ "${TMUX_PANE}" != "${active_pane}" ]]; then
                 return 1
             fi
@@ -121,8 +121,8 @@ if [[ -n $DISPLAY ]] && command -v xdotool &>/dev/null && command -v notify-send
     }
 
     function notify_preexec {
-        notify_command="$1"
-        notify_timestamp="$EPOCHSECONDS"
+        declare -g notify_command="$1"
+        declare -g notify_timestamp="$EPOCHSECONDS"
     }
 
     function notify_postexec {
@@ -135,6 +135,7 @@ if [[ -n $DISPLAY ]] && command -v xdotool &>/dev/null && command -v notify-send
 
         # check if the command did run for a long time and if the terminal is in the background
         if [[ "${run_time}" -ge "${NOTIFY_THRESHOLD:-15}" ]] && ! shell_has_focus; then
+            local title icon
             if [[ "${exit_code}" -eq 0 ]]; then
                 title='Command completed'
                 icon='dialog-information'
@@ -198,9 +199,11 @@ export LESSCOLOR='yes'
 for pv in /usr/bin/python[0-9]{,.[0-9]}(N); do
     which "${pv#/usr/bin/}" &>/dev/null && compdef "${pv#/usr/bin/}"=python
 done
+unset pv
 
 
 function nmap-top-ports() {
+    local proto
     if [[ $# -eq 0 || $# -gt 2 ]]; then
         echo "Usage: nmap-top-ports <number> [tcp|udp]" 2>&1
         return 1
