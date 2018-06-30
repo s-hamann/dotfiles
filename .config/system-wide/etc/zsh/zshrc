@@ -668,10 +668,16 @@ zstyle ':completion:*:correct:*' insert-unambiguous true
 
 # Sensible Aliases {{{
 
+function is_busybox() {
+    # Usage: is_busybox cmd
+    # tries to determine if cmd is a busybox implementation
+    [[ "${$(whence -pS "$1")##*/}" == 'busybox' ]]
+}
+
 alias ls='ls --color=auto'
 alias ll='ls -lh'
-alias grep='grep --color=auto'
+is_busybox grep || alias grep='grep --color=auto'
 alias df='df -h'
-alias ip='ip -c'
+whence ip >/dev/null && ! is_busybox ip && alias ip='ip -c'
 
 # }}}

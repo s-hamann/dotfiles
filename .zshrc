@@ -184,9 +184,9 @@ fi
 
 
 # some aliases
-alias o=xdg-open
-alias sudo='sudo ' # expand aliases after sudo
-alias vi='vim -p'
+whence xdg-open >/dev/null && alias o=xdg-open
+whence sudo >/dev/null && alias sudo='sudo ' # expand aliases after sudo
+whence vim >/dev/null && alias vi='vim -p'
 
 
 # enable syntax highlighting in less
