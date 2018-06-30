@@ -1,13 +1,13 @@
-#!/bin/bash
+#!/bin/sh
 
-if [[ $# -gt 1 || "$1" == '-h' || "$1" == '--help' ]]; then
+if [ $# -gt 1 ] || [ "$1" = '-h' ] || [ "$1" = '--help' ]; then
     echo "Usage: $0 [<branch>]"
     echo "  Without <branch> list the known remote branches."
     echo "  When <branch> is given, clone it as a new vcsh repository."
     exit 1
 fi
 
-if [[ $# -eq 0 ]]; then
+if [ $# -eq 0 ]; then
 
     vcsh base for-each-ref refs/remotes --format='%(refname)' | while read -r line; do
         echo "${line#refs/remotes/*/}"
@@ -25,7 +25,7 @@ else
 
     # get the remote URL for the repository
     url="$(vcsh base config --get remote.origin.url)"
-    if [[ -z "${url}" ]]; then
+    if [ -z "${url}" ]; then
         echo "fatal: no remote url found" >&2
         exit 3
     fi
