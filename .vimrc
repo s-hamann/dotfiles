@@ -358,16 +358,6 @@ nnoremap <C-j> <C-w>j
 nnoremap <C-k> <C-w>k
 nnoremap <C-l> <C-w>l
 
-" Disable arrow keys in normal and visual mode (but not in insert mode).
-nnoremap <left> <nop>
-nnoremap <down> <nop>
-nnoremap <up> <nop>
-nnoremap <right> <nop>
-vnoremap <left> <nop>
-vnoremap <down> <nop>
-vnoremap <up> <nop>
-vnoremap <right> <nop>
-
 " Make the start and end of the line more reachable.
 nnoremap H ^
 nnoremap L $
