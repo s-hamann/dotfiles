@@ -112,9 +112,11 @@ if has("gui") || &t_Co > 255
     let g:gruvbox_italic = 1
     let g:gruvbox_invert_selection = 0
     silent! colorscheme gruvbox
-    set cursorline " Highlight the line with the cursors somehow.
-    " But disable underline or whatever the colorscheme may set.
-    highlight CursorLine gui=NONE cterm=NONE
+    if has('syntax')
+        set cursorline " Highlight the line with the cursors somehow.
+        " But disable underline or whatever the colorscheme may set.
+        highlight CursorLine gui=NONE cterm=NONE
+    endif
 else
     silent! colorscheme default
 endif
@@ -122,18 +124,22 @@ endif
 set background=dark " Set colours for a dark background.
 set lazyredraw " Don't redraw while running macros.
 set ttyfast " Better behaviour
-set linebreak " When (visually) wrapping long lines, do it at a nice position.
+if has('linebreak')
+    set linebreak " When (visually) wrapping long lines, do it at a nice position.
+endif
 
-if has('autocmd')
+if has('autocmd') && has('diff')
     " Make vimdiff respect the global wrap setting
     autocmd FilterWritePre * if &diff | setlocal wrap< | endif
 endif
 " }}}
 
 " Syntax highlighting settings {{{
-syntax on " Enable syntax highlighting.
-syntax spell toplevel " Do spell checking for all text that is not in a syntax item.
-set synmaxcol=512 " Don't color long lines (too slow).
+if has('syntax')
+    syntax on " Enable syntax highlighting.
+    syntax spell toplevel " Do spell checking for all text that is not in a syntax item.
+    set synmaxcol=512 " Don't color long lines (too slow).
+endif
 if (&termencoding ==# 'utf-8' || &encoding ==# 'utf-8') && version >= 700
     set list listchars=trail:·,tab:→\ ,nbsp:␣ " Highlight trailing spaces, tabs and non-breaking spaces.
 else
@@ -142,7 +148,9 @@ endif
 " }}}
 
 " Status bar settings {{{
-set showcmd " Show command parts and counts in the status bar.
+if has('cmdline_info')
+    set showcmd " Show command parts and counts in the status bar.
+endif
 set report=0 " Always show a status message about number of changed lines.
 
 if has('statusline') && has('autocmd')
@@ -288,11 +296,17 @@ set smarttab " At the start of a line, use tabs as shiftwidth, not tabstop.
 
 " Various settings
 set number " Turn on line numbers.
-set numberwidth=3 " If possible, use only 3 columns for line numbers.
-set confirm " Don't fail in case of unsaved changes, etc., but ask for confirmation.
+if has('linebreak')
+    set numberwidth=3 " If possible, use only 3 columns for line numbers.
+endif
+if (!has('gui') && has('dialog_con')) || (has('gui') && has('dialog_gui'))
+    set confirm " Don't fail in case of unsaved changes, etc., but ask for confirmation.
+endif
 set scrolloff=4 " Keep the cursor 4 lines from the top and bottom.
 set nrformats=hex " Interpret 0x<number> as hex number when in-/decreasing (<C-A>, <C-X>).
-set clipboard-=autoselect " Don't overwrite the X11 selection when using visual mode.
+if has('xterm_clipboard') || has('gui')
+    set clipboard-=autoselect " Don't overwrite the X11 selection when using visual mode.
+endif
 if $USER !=# 'root'
     set tags=./tags;tags " Files to scan for tags (; - scan parent directories)
 endif
@@ -387,8 +401,10 @@ set formatoptions+=j " Remove comment leaders when joining lines.
 " Use case insensitive search, except when there are capital letters or \C
 set ignorecase " Make search case-insensitive by default.
 set smartcase " Make search case-sensitive when there are capital letters.
-set incsearch " Search while typing.
-set hlsearch " Highlight search matches.
+if has('extra_search')
+    set incsearch " Search while typing.
+    set hlsearch " Highlight search matches.
+endif
 
 " Make <leader>+l clear search highlights.
 nnoremap <silent> <leader>l :nohlsearch<CR>
@@ -417,27 +433,29 @@ nnoremap # :call <SID>NSetSearch()<CR>??<CR>
 " }}}
 
 " Folding {{{
-set foldenable
-set foldmethod=syntax
-set foldlevelstart=99 " Don't autofold
-" In normal mode, use <Space> to toggle folding.
-nnoremap <Space> za
-" In visual mode, use <Space> to create folds.
-xnoremap <expr> <Space> &foldmethod == 'manual' ? 'zf' : ''
-if has('autocmd')
-    augroup AutoFoldColumn
-        autocmd!
-        " Add a foldcolumn for large windows.
-        " 'Large' means, at least 80 characters, not counting the number
-        " columns. The foldcolumn is not shown when folding is disabled.
-        " Note: This does not trigger when resizing windows.
-        autocmd VimResized,VimEnter,WinEnter,BufWinEnter *
-                \ if &foldenable && winwidth(0) > 80 + (or(&number, &relativenumber) * max([&numberwidth, &number * strlen(line('$'))])) |
-                    \ setlocal foldcolumn=1 |
-                \ else |
-                    \ setlocal foldcolumn=0 |
-                \ endif
-    augroup END
+if has('folding')
+    set foldenable
+    set foldmethod=syntax
+    set foldlevelstart=99 " Don't autofold
+    " In normal mode, use <Space> to toggle folding.
+    nnoremap <Space> za
+    " In visual mode, use <Space> to create folds.
+    xnoremap <expr> <Space> &foldmethod == 'manual' ? 'zf' : ''
+    if has('autocmd')
+        augroup AutoFoldColumn
+            autocmd!
+            " Add a foldcolumn for large windows.
+            " 'Large' means, at least 80 characters, not counting the number
+            " columns. The foldcolumn is not shown when folding is disabled.
+            " Note: This does not trigger when resizing windows.
+            autocmd VimResized,VimEnter,WinEnter,BufWinEnter *
+                    \ if &foldenable && winwidth(0) > 80 + (or(&number, &relativenumber) * max([&numberwidth, &number * strlen(line('$'))])) |
+                        \ setlocal foldcolumn=1 |
+                    \ else |
+                        \ setlocal foldcolumn=0 |
+                    \ endif
+        augroup END
+    endif
 endif
 " }}}
 
@@ -476,7 +494,9 @@ inoremap <expr> } ClosePair('}')
 " }}}
 
 " Tab Completion {{{
-set completeopt+=longest
+if has('insert_expand')
+    set completeopt+=longest
+endif
 " Change colors of completion menu.
 highlight Pmenu ctermbg=DarkGreen ctermfg=White
 highlight PmenuSel ctermbg=DarkGreen ctermfg=Black
@@ -488,14 +508,16 @@ if has('autocmd')
     augroup END
 endif
 
-" Completion in command mode.
-set wildmenu " Show a menu.
+if has('wildmenu')
+    " Completion in command mode.
+    set wildmenu " Show a menu.
+endif
 " Show a list and complete the longest match, then tab through the matches.
 set wildmode=list:longest,full
 " }}}
 
 " auto chmod script {{{
-if has('autocmd')
+if has('autocmd') && executable('chmod')
     " From tpope's vim-eunuch
     augroup shebang_chmod
         autocmd!
@@ -508,7 +530,7 @@ if has('autocmd')
                 \ endif |
                 \ endif
         autocmd BufWritePost,FileWritePost * nested
-                \ if exists('b:chmod_post') && executable('chmod') |
+                \ if exists('b:chmod_post') |
                 \ silent! execute '!chmod '.b:chmod_post.' "<afile>"' |
                 \ edit |
                 \ unlet b:chmod_post |
