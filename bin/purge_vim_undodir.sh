@@ -13,7 +13,7 @@ if [[ "$1" == '-h' || "$1" == '--help' ]]; then
     exit 0
 elif [[ -z "$1" ]]; then
     # Get undodirs from vim, remove any non-printable characters, split at ,
-    IFS=',' read -r -a undodirs <<< "$(vim -c "execute 'silent !echo ' . &undodir | quit" 2>/dev/null | egrep -o '\.?/[[:print:]]*')"
+    IFS=',' read -r -a undodirs <<< "$(vim -c "execute 'silent !echo ' . &undodir | quit" 2>/dev/null | grep -Eo '\.?/[[:print:]]*')"
     # Remove leading spaces (vim ignores them)
     undodirs=( "${undodirs[@]# }" )
     # Remove relative paths (starting with ./)
