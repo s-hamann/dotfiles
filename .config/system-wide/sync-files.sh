@@ -1,7 +1,12 @@
 #!/bin/bash
 
-base_dir="${XDG_CONFIG_HOME:-"$HOME/.config"}/system-wide/"
-ignore_file="${HOME}/.gitignore"
+base_dir="$(dirname -- "$(readlink -f -- "$0")")"
+if [[ "${UID}" -eq 0 ]]; then
+    user="$(stat -c '%U' -- "$0")"
+else
+    user="${USER}"
+fi
+ignore_file=~${user}/.gitignore
 verbose=true
 
 
@@ -164,8 +169,8 @@ find "${base_dir}" -mindepth 2 -name "*.install" -prune -o -type f -print -o -ty
         # keep permissions and times, but not ownership
         ${sudo} rsync --update --links --perms --times "${target_filename}" "${filename}"
         # make sure the copy is owned by the user, not root
-        if [[ "$(stat -c "%U:%G" "${filename}")" != "${USER}:$(id -g -n)" ]]; then
-            ${sudo} chown "${USER}:$(id -g -n)" -- "${filename}"
+        if [[ "$(stat -c "%U:%G" "${filename}")" != "${user}:$(id -g -n -- "${user}")" ]]; then
+            ${sudo} chown "${user}:$(id -g -n -- "${user}")" -- "${filename}"
         fi
     fi
 
