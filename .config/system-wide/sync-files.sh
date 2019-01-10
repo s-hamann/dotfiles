@@ -21,7 +21,7 @@ if [[ "$(uname -o)" == "GNU/Linux" ]]; then
     fi
 elif [[ "$(uname -o)" == 'Cygwin' ]]; then
     OS='cygwin'
-    win_version="$(reg query "HKLM\Software\Microsoft\Windows NT\CurrentVersion" /v "ProductName" | grep -o "Windows .*")"
+    win_version="$(reg query "HKLM\\Software\\Microsoft\\Windows NT\\CurrentVersion" /v "ProductName" | grep -o "Windows .*")"
     case "${win_version}" in
         "Windows XP")
             FLAVOUR='xp' ;;
@@ -47,7 +47,7 @@ elif [[ "$(uname -o)" == 'Cygwin' ]]; then
             FLAVOUR='2012' ;;
     esac
     unset win_version
-    VERSION="$(reg query "HKLM\Software\Microsoft\Windows NT\CurrentVersion" /v "CSDVersion" | sed 's/Service Pack ([0-9])/sp\1/')"
+    VERSION="$(reg query "HKLM\\Software\\Microsoft\\Windows NT\\CurrentVersion" /v "CSDVersion" | sed 's/Service Pack ([0-9])/sp\1/')"
 elif [[ "$(uname -o)" == 'Android' ]]; then
     OS='android'
     if [[ "${LD_LIBRARY_PATH}" == *termux* ]]; then
@@ -71,14 +71,14 @@ if ! command -v sudo &>/dev/null; then
     no_sudo_warning=true
     # sudo is not available, implement a stub
     function sudo() {
-        args="$@"
+        args=("$@")
         if command -v su &>/dev/null; then
             # emulate sudo behaviour using su (and hope the parameters do not contain options to sudo...)
             if ${no_sudo_warning}; then
                 echo "Warning: Emulating sudo behaviour with 'su'. This is unreliable. Please install sudo."
                 no_sudo_warning=false
             fi
-            su -c "$args"
+            su -c "${args[@]}"
         else
             # su is not available either, this happens on cygwin
             # hope that we have sufficient privileges and run the parameters
@@ -86,14 +86,14 @@ if ! command -v sudo &>/dev/null; then
                 echo 'Warning: Sudo is unavailable. Running with normal privileges.'
                 no_sudo_warning=false
             fi
-            $args
+            "${args[@]}"
         fi
     }
 fi
 
 
 # loop over all files, including all subdirectories
-find "${base_dir}" -mindepth 2 -name "*.install" -prune -o -type f -print -o -type l -print | while read filename; do
+find "${base_dir}" -mindepth 2 -name "*.install" -prune -o -type f -print -o -type l -print | while read -r filename; do
     target_filename="/${filename#${base_dir}}"
     base_filename="$(basename "${filename}")"
     fuser='root' # target file owner
@@ -102,7 +102,7 @@ find "${base_dir}" -mindepth 2 -name "*.install" -prune -o -type f -print -o -ty
 
     # check $ignore_file
     if [[ -e "${ignore_file}" ]]; then
-        while read pattern; do
+        while read -r pattern; do
             # skip the current file if the pattern matches
             # shellcheck disable=SC2053
             [[ "${base_filename}" == ${pattern} ]] && continue 2
