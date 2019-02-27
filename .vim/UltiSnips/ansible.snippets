@@ -1,0 +1,136 @@
+snippet file "file module"
+file:
+	path: ${1}
+	state: ${2:#file|link|directory|hard|touch|absent}
+	owner: ${3:root}
+	group: ${4:root}
+	mode: ${5}
+	src: ${6}
+	follow: ${7:#true|false}
+	force: ${8:#true|false}
+	recurse: ${9:#true|false}
+	seuser: ${10}
+	setype: ${11}
+	serole: ${12}
+	selevel: ${13:s0}
+endsnippet
+
+snippet copy "copy module"
+copy:
+	dest: ${1}
+	src: ${2}
+	remote_src: ${3:#true|false}
+	content: ${4}
+	directory_mode: ${5}
+	follow: ${6:#true|false}
+	force: ${7:#true|false}
+	owner: ${8:root}
+	group: ${9:root}
+	mode: ${10}
+	validate: ${11}
+	seuser: ${12}
+	setype: ${13}
+	serole: ${14}
+	selevel: ${15:s0}
+endsnippet
+
+snippet template "template module"
+template:
+	dest: ${1}
+	src: ${2}
+	content: ${3}
+	follow: ${4:#true|false}
+	owner: ${5:root}
+	group: ${6:root}
+	mode: ${7}
+	validate: ${8}
+	seuser: ${9}
+	setype: ${10}
+	serole: ${11}
+	selevel: ${12:s0}
+endsnippet
+
+snippet lineinfile "lineinfile module"
+lineinfile:
+	path: ${1}
+	line: ${2}
+	regexp: ${3}
+	backrefs: ${4:#true|false}
+	insertbefore: ${5:#BOF|*regex*}
+	insertafter: ${6:#EOF|*regex*}
+	create: ${7:#true|false}
+	owner: ${8:root}
+	group: ${9:root}
+	mode: ${10}
+	state: ${11:#present|absent}
+	validate: ${12}
+	seuser: ${13}
+	setype: ${14}
+	serole: ${15}
+	selevel: ${16:s0}
+endsnippet
+
+snippet replace "replace module"
+replace:
+	path: ${1}
+	regexp: ${2}
+	replace: ${3}
+	before: ${4}
+	after: ${5}
+	owner: ${6:root}
+	group: ${7:root}
+	mode: ${8}
+	validate: ${9}
+	seuser: ${10}
+	setype: ${11}
+	serole: ${12}
+	selevel: ${13:s0}
+endsnippet
+
+snippet cron "cron module"
+cron:
+	name: ${1}
+	job: ${2}
+	user: ${3:root}
+	cron_file: ${4}
+	state: ${5:#present|absent}
+	minute: ${6:*}
+	hour: ${7:*}
+	day: ${8:*}
+	month: ${9:*}
+	weekday: ${10:*}
+endsnippet
+
+snippet cron-env "cron module"
+cron:
+	env: true
+	name: ${1}
+	value: ${2}
+	user: ${3:root}
+	cron_file: ${4}
+	state: ${5:#present|absent}
+endsnippet
+
+snippet package "package module"
+package:
+	name: ${1}
+	state: ${2:#present|absent}
+endsnippet
+
+snippet service "service module"
+service:
+	name: ${1}
+	state: ${2:#started|stopped|restarted|reloaded}
+	enabled: ${3:#true|false}
+endsnippet
+
+snippet distro_vars "include distribution-specific var file"
+- name: 'gather os specific variables'
+	include_vars: '{{ item }}'
+	with_first_found:
+		- "{{ ansible_facts['distribution'] }}-{{ ansible_facts['distribution_major_version']}}.yml"
+		- "{{ ansible_facts['distribution'] }}.yml"
+		- "{{ ansible_facts['os_family'] }}.yml"
+		- 'default.yml'
+
+endsnippet

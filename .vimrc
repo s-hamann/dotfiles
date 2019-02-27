@@ -46,6 +46,9 @@ if isdirectory(expand('~/.vim/bundle/Vundle.vim'))
                 Plugin 'sjl/gundo.vim'
             endif
         endif
+        if executable('ansible')
+            Plugin 'pearofducks/ansible-vim'
+        endif
     endif
 
     " Plugin 'tomasr/molokai' " color scheme
@@ -536,6 +539,11 @@ endif
 if executable('ag')
     let g:ackprg = 'ag --vimgrep'
 endif
+" }}}
+
+" ansible-vim {{{
+" improve secondary filetype detection for jinja2 templates
+let g:ansible_template_syntaxes = { '*.sh.j2': 'sh', '*.xml.j2': 'xml' }
 " }}}
 
 " Signature {{{
