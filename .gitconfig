@@ -30,8 +30,8 @@
 	nobranch = 196 # red
 [alias]
 	s = status --short
-	graph = log --graph --all --format=format:\"%C(auto)%h %d %ad %C(119)%an%C(reset) %C(bold)%s\" --date=short
-	changes = log --stat --find-renames --format=format:\"%C(auto)%h %C(green)%d%C(reset) %C(auto)%ad %C(119)%an%C(reset) %n%C(bold)%s%C(auto)%n%b\" --date=short
+	graph = log --graph --all --format=format:\"%C(auto)%h %d %ad %G? %C(119)%an%C(reset) %C(bold)%s\" --date=short
+	changes = log --stat --find-renames --format=format:\"%C(auto)%h %d %ad %G? %C(119)%an%C(reset) %n%C(bold)%s%C(auto)%n%b\" --date=short
 	wdiff = diff --word-diff=color
 	cdiff = diff --cached --find-renames
 [advice]
