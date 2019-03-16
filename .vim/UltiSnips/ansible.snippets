@@ -120,8 +120,8 @@ endsnippet
 snippet service "service module"
 service:
 	name: ${1}
-	state: ${2:#started|stopped|restarted|reloaded}
-	enabled: ${3:#true|false}
+	enabled: ${2:#true|false}
+	state: "{{ ansible_facts['is_chroot'] | ternary(omit, '${3:#started|stopped|restarted|reloaded}') }}"
 endsnippet
 
 snippet distro_vars "include distribution-specific var file"
