@@ -1,6 +1,6 @@
 # automatically start X11 when running on TTY 1
 if [[ -o login && -t 0 && "${TTY}" == '/dev/tty1' && -z "$DISPLAY" ]] && command -v startx &>/dev/null; then
-    exec startx
+    exec startx -- "vt${TTY#/dev/tty}"
 fi
 # Note:
 # In order to automatically unlock the gnome keyring, something like the following needs to be added to /etc/pam.d/login
