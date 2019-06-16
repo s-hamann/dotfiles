@@ -1,5 +1,10 @@
 *
 !/.config
+!/.config/vcsh
+!/.config/vcsh/hooks-available
+!/.config/vcsh/hooks-available/xfce-terminal.*
+!/.config/vcsh/hooks-enabled
+!/.config/vcsh/hooks-enabled/xfce-terminal.*
 !/.config/xfce4
 !/.config/xfce4/terminal
 !/.config/xfce4/terminal/*

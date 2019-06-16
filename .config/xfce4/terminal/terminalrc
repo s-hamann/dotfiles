@@ -26,7 +26,7 @@ MiscDefaultWorkingDir=
 MiscRewrapOnResize=TRUE
 MiscUseShiftArrowsToScroll=TRUE
 ShortcutsNoHelpkey=TRUE
-FontName=Monospace 10
+FontName=DejaVuSansMono Nerd Font 10
 ColorBackground=#155515551555
 ColorForeground=#eeeeeeeeecec
 
