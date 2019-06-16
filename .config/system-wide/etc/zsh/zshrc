@@ -674,8 +674,13 @@ function is_busybox() {
     [[ "${$(whence -pS "$1")##*/}" == 'busybox' ]]
 }
 
-alias ls='ls --color=auto'
-alias ll='ls -lh'
+if whence lsd >/dev/null; then
+    alias ls='lsd'
+    alias ll='lsd -l'
+else
+    alias ls='ls --color=auto'
+    alias ll='ls -lh'
+fi
 is_busybox grep || alias grep='grep --color=auto'
 alias df='df -h'
 whence ip >/dev/null && ! is_busybox ip && alias ip='ip -c'
