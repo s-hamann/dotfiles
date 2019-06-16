@@ -445,6 +445,7 @@ precmd_prompt() {
     # set the default prompt base
     local prompt_base="${zsh_prompt_base[ZSH_DEFAULT_PROMPT]}"
     # check all array keys in $zsh_prompt_base
+    local var
     for var in "${(@k)zsh_prompt_base}"; do
         # check if the key is an environment variable
         if [[ -n "${(P)var}" ]]; then
