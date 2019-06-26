@@ -139,10 +139,19 @@ endif
 
 " Syntax highlighting settings {{{
 if has('syntax')
-    syntax on " Enable syntax highlighting.
+    syntax enable " Enable syntax highlighting.
     syntax spell toplevel " Do spell checking for all text that is not in a syntax item.
     set synmaxcol=512 " Don't color long lines (too slow).
 endif
+
+if has("spell")
+    " Highlight spelling errors on the terminal by underlining
+    highlight SpellBad cterm=underline
+    highlight SpellCap cterm=underline
+    highlight SpellLocal cterm=underline
+    highlight SpellRare cterm=underline
+endif
+
 if (&termencoding ==# 'utf-8' || &encoding ==# 'utf-8') && version >= 700
     set list listchars=trail:·,tab:→\ ,nbsp:␣ " Highlight trailing spaces, tabs and non-breaking spaces.
 else
