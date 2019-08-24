@@ -541,6 +541,29 @@ if has('autocmd') && executable('chmod')
 endif
 " }}}
 
+" Protect temporary files from leaking sensitive data
+if has('autocmd')
+    function! s:unleak()
+        " Disable writing to .viminfo
+        set viminfo=
+        " Disable swap files
+        set noswapfile
+        " Disable backup files
+        set nobackup
+        set nowritebackup
+        " Disable undo files
+        if has('persistent_undo')
+            set noundofile
+        endif
+        echomsg 'Editing a temporary file. Data leaks disabled.'
+    endfunction
+    augroup temp_file
+        autocmd!
+        " This list should cover (at least) ansible vaults, pass and zsh
+        autocmd VimEnter {/tmp,$TMPDIR,$XDG_RUNTIME_DIR,/dev/shm}/{tmp*.yml,pass*.txt,zsh*} call s:unleak()
+    augroup END
+endif
+
 " Plugin Settings {{{
 
 " ack.vim {{{
