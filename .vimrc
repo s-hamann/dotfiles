@@ -586,9 +586,9 @@ let g:SignatureMarkerTextHLDynamic = 1
 
 " GitGutter {{{
 " Change some mappings.
-nmap <leader>hp <Plug>GitGutterPrevHunk
-nmap <leader>hn <Plug>GitGutterNextHunk
-nmap <leader>hv <Plug>GitGutterPreviewHunk
+nmap <leader>hp <Plug>(GitGutterPrevHunk)
+nmap <leader>hn <Plug>(GitGutterNextHunk)
+nmap <leader>hv <Plug>(GitGutterPreviewHunk)
 " }}}
 
 " Secure Modelines {{{
