@@ -124,13 +124,17 @@ service:
 	state: "{{ ansible_facts['is_chroot'] | ternary(omit, '${3:#started|stopped|restarted|reloaded}') }}"
 endsnippet
 
-snippet distro_vars "include distribution-specific var file"
+snippet distro_vars "include distribution-specific vars files"
 - name: 'gather os specific variables'
-	include_vars: '{{ item }}'
-	with_first_found:
-		- "{{ ansible_facts['distribution'] }}-{{ ansible_facts['distribution_major_version']}}.yml"
-		- "{{ ansible_facts['distribution'] }}.yml"
-		- "{{ ansible_facts['os_family'] }}.yml"
+	include_vars: '{{ vars_file }}'
+	loop:
 		- 'default.yml'
+		- "{{ ansible_facts['os_family'] | lower }}.yml"
+		- "{{ ansible_facts['distribution'] | lower }}.yml"
+		- "{{ ansible_facts['distribution'] | lower }}-{{ ansible_facts['distribution_major_version'] }}.yml"
+		- "{{ ansible_facts['distribution'] | lower }}-{{ ansible_facts['distribution_version'] }}.yml"
+	loop_control:
+		loop_var: vars_file
+	when: "(vars_file is abs and vars_file is file) or (vars_file is not abs and (role_path ~ '/vars/' ~ vars_file) is file)"
 
 endsnippet
