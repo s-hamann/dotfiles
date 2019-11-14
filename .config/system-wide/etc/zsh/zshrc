@@ -302,10 +302,10 @@ chpwd_vcs_info() {
 }
 add-zsh-hook chpwd chpwd_vcs_info
 
-zstyle ':vcs_info:*' unstagedstr '%F{red}'
-zstyle ':vcs_info:*' stagedstr '%F{green}'
-zstyle ':vcs_info:*' formats '[%F{cyan}%s%f%u%c%b%%b%F{cyan}%m%f]'
-zstyle ':vcs_info:*' actionformats '[%F{cyan}%s%f%u%c%b%%b%F{cyan}%m%f|%a]'
+zstyle ':vcs_info:*' unstagedstr '%F{1}'
+zstyle ':vcs_info:*' stagedstr '%F{2}'
+zstyle ':vcs_info:*' formats '[%F{6}%s%f%u%c%b%%b%F{6}%m%f]'
+zstyle ':vcs_info:*' actionformats '[%F{6}%s%f%u%c%b%%b%F{6}%m%f|%a]'
 zstyle ':vcs_info:*+set-message:*' hooks set-vcs-symbol set-misc
 zstyle ':vcs_info:*' check-for-changes true
 zstyle ':vcs_info:*+pre-get-data:*' hooks pre-get-data
@@ -419,19 +419,19 @@ zstyle ':vcs_info:*+pre-get-data:*' hooks pre-get-data
 # set the default formatting of the user name in the prompt
 if [[ "${EUID}" == 0 ]]; then
     # root is red
-    zsh_prompt_user="%B%F{red}"
+    zsh_prompt_user="%B%F{9}"
 else
     # other users are green
-    zsh_prompt_user="%F{green}"
+    zsh_prompt_user="%F{2}"
 fi
 
 # set the default formatting of the host name in the prompt
 if [[ -z "${SSH_CONNECTION}" ]]; then
     # local shell is blue
-    zsh_prompt_host="%B%F{blue}"
+    zsh_prompt_host="%B%F{12}"
 else
     # remote connection is yellow
-    zsh_prompt_host="%B%F{yellow}"
+    zsh_prompt_host="%B%F{11}"
 fi
 
 # allow substitution of variables in the prompt
@@ -455,7 +455,7 @@ precmd_prompt() {
         fi
     done
     # put the actual prompt together
-    PS1="${prompt_base}:%B%F{black}%2~%f%b\${vcs_info_msg_0_}%#"
+    PS1="${prompt_base}:%F{8}%2~%f%b\${vcs_info_msg_0_}%#"
 }
 add-zsh-hook precmd precmd_prompt
 
@@ -465,10 +465,10 @@ add-zsh-hook precmd precmd_prompt
 function set_RPS1 {
     local RPS1_time RPS1_mode
     # current time, colour depends on the exit status of the last command
-    RPS1_time="%(?.%B%F{yellow}.%B%F{magenta})[%*]%f%b"
+    RPS1_time="%(?.%B%F{11}.%B%F{13})[%*]%f%b"
     # display [CMD] when in vicmd mode
     if [[ "$1" = "vicmd" ]]; then
-        RPS1_mode="%B%F{yellow}[CMD]%f%b"
+        RPS1_mode="%B%F{11}[CMD]%f%b"
     else
         RPS1_mode=""
     fi
@@ -547,9 +547,9 @@ compinit
 # formatting {{{
 
 # set formats
-zstyle ':completion:*:corrections'  format '%F{red}%d (errors: %e)%f'
-zstyle ':completion:*:descriptions' format '%F{red}completing %B%d%b%f'
-zstyle ':completion:*:warnings'     format '%F{red}No matches for:%f %d'
+zstyle ':completion:*:corrections'  format '%F{1}%d (errors: %e)%f'
+zstyle ':completion:*:descriptions' format '%F{1}completing %B%d%b%f'
+zstyle ':completion:*:warnings'     format '%F{1}No matches for:%f %d'
 zstyle ':completion:*:messages'     format '%d'
 
 # }}}
