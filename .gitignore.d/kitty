@@ -1,0 +1,6 @@
+*
+!/.config
+!/.config/kitty
+!/.config/kitty/**
+!/.gitignore.d
+!/.gitignore.d/kitty
