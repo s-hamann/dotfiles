@@ -157,7 +157,7 @@ fi
 
 # zsh-syntax-highlighting plugin
 zsh_syntax_highlighting_paths=(
-"/usr/share/zsh/site-contrib/zsh-syntax-highlighting/" # Gentoo
+"/usr/share/zsh/site-functions/" # Gentoo
 "/usr/share/zsh/plugins/zsh-syntax-highlighting/" # Arch Linux
 "/usr/share/zsh-syntax-highlighting/" # Debian
 )
