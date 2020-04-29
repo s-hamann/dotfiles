@@ -99,13 +99,34 @@ zsh_prompt_base[VCSH_REPO_NAME]='%F{yellow}${VCSH_REPO_NAME}%f'
 
 # send a notification if a long-running command finishes
 # Note: only set this up if an X session is running
-if [[ -n $DISPLAY ]] && command -v xdotool &>/dev/null && command -v notify-send &>/dev/null; then
+if ( ( [[ -n $DISPLAY ]] && command -v xdotool &>/dev/null ) || ( [[ -n "${WAYLAND_DISPLAY}" ]] && command -v swaymsg &>/dev/null && command -v python &>/dev/null ) ) && command -v notify-send &>/dev/null; then
 
     # returns 0 iff the shell running this function is in the foreground
     function shell_has_focus {
-        if [[ "${WINDOWID}" != "$(xdotool getactivewindow)" ]]; then
-            # active window is not this window
-            return 1
+        if [[ -n "${WAYLAND_DISPLAY}" ]]; then
+            local get_focused_pid="
+import json, sys
+def get_focused_pid(obj):
+  if isinstance(obj, dict):
+    if obj.get('focused', False) == True:
+      print(obj['pid'])
+      return
+    if 'nodes' in obj:
+      get_focused_pid(obj['nodes'])
+  elif isinstance(obj, list):
+    for item in obj:
+      get_focused_pid(item)
+get_focused_pid(json.load(sys.stdin))
+"
+            if [[ "$PPID" != "$(swaymsg -t get_tree | python -c "${get_focused_pid}")" ]]; then
+                # active window is not this window
+                return 1
+            fi
+        else
+            if [[ "${WINDOWID}" != "$(xdotool getactivewindow)" ]]; then
+                # active window is not this window
+                return 1
+            fi
         fi
         # TODO: get current tab inside the terminal
         if [[ -n "${TMUX}" ]]; then
