@@ -143,7 +143,7 @@ if [[ -n $DISPLAY ]] && command -v xdotool &>/dev/null && command -v notify-send
                 title='Command failed'
                 icon='dialog-warning'
             fi
-            notify-send --icon="${icon}" "${title}" "${notify_command}"
+            notify-send --icon="${icon}" --urgency=low "${title}" "${notify_command}"
         fi
 
         # clean up the environment
