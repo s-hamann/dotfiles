@@ -216,6 +216,13 @@ export LESSCOLOR='yes'
 # use vim to view man-pages
 [[ -e /usr/bin/vimmanpager ]] && export MANPAGER=/usr/bin/vimmanpager
 
+if whence bat >/dev/null; then
+    alias cat=bat
+    export BAT_PAGER='less -RF'
+    [[ "$(tput sitm)" != '' ]] && alias bat='bat --italic-text=always'
+    export MANPAGER="sh -c 'col -bx | bat -l man -p'"
+fi
+
 # add completion for python2 and similar symlinks
 for pv in /usr/bin/python[0-9]{,.[0-9]}(N); do
     which "${pv#/usr/bin/}" &>/dev/null && compdef "${pv#/usr/bin/}"=python
