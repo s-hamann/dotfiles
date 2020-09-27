@@ -68,8 +68,9 @@ if isdirectory(expand('~/.vim/bundle/Vundle.vim'))
     " All of your Plugins must be added before the following line
     call vundle#end()
 
-    if $USER ==# 'root'
-        " Disable some Vundle commands for root.
+    if $USER !=# systemlist("ls -ld ~/.vim/ | awk 'NR == 1 { print $3 }'")[0]
+        " Disable some Vundle commands if ~./vim/ is not owned by the current user.
+        " Note: stat would be preferable to parsing ls, if only it was portable.
         delcommand PluginClean
         delcommand PluginInstall
         delcommand PluginUpdate
