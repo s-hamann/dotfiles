@@ -119,7 +119,6 @@ if has("gui") || &t_Co > 255
     " endif
     " let g:jellybeans_use_term_italics = 1
     " silent! colorscheme jellybeans
-    let g:gruvbox_contrast_dark = 'hard'
     let g:gruvbox_italic = 1
     let g:gruvbox_invert_selection = 0
     silent! colorscheme gruvbox
