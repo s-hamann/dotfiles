@@ -223,6 +223,10 @@ if whence bat >/dev/null; then
     export MANPAGER="sh -c 'col -bx | bat -l man -p'"
 fi
 
+if whence kitty >/dev/null && [[ "${TERM}" == xterm-kitty* ]]; then
+    alias kdiff='kitty +kitten diff'
+fi
+
 # add completion for python2 and similar symlinks
 for pv in /usr/bin/python[0-9]{,.[0-9]}(N); do
     which "${pv#/usr/bin/}" &>/dev/null && compdef "${pv#/usr/bin/}"=python
