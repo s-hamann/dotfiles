@@ -217,10 +217,16 @@ export LESSCOLOR='yes'
 [[ -e /usr/bin/vimmanpager ]] && export MANPAGER=/usr/bin/vimmanpager
 
 if whence bat >/dev/null; then
-    alias cat=bat
+    bat='bat'
+elif whence batcat >/dev/null; then
+    bat='batcat'
+fi
+if [[ -n "${bat}" ]]; then
+    alias cat="${bat}"
     export BAT_PAGER='less -RF'
-    [[ "$(tput sitm)" != '' ]] && alias bat='bat --italic-text=always'
-    export MANPAGER="sh -c 'col -bx | bat -l man -p'"
+    [[ "$(tput sitm)" != '' ]] && alias bat="${bat} --italic-text=always"
+    export MANPAGER="sh -c 'col -bx | ${bat} -l man -p'"
+    unset bat
 fi
 
 if whence kitty >/dev/null && [[ "${TERM}" == xterm-kitty* ]]; then
