@@ -239,6 +239,7 @@ if zmodload zsh/regex &>/dev/null; then
     HISTIGNORE+=('^l(s|l) $')
     HISTIGNORE+=('^pwd$')
     HISTIGNORE+=('^git (status|graph)$')
+    HISTIGNORE+=('^kill ')
     #HISTIGNORE+=('^(exit|logout)$')
     #HISTIGNORE+=('^clear$')
 fi
