@@ -45,6 +45,8 @@
 [rebase]
 	autostash = true
 	autosquash = true
+[init]
+	defaultBranch = main
 [include]
 	path = ~/.gitidentity
 	path = ~/.gitconfig.local
