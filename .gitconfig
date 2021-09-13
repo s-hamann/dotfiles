@@ -36,6 +36,8 @@
 	cdiff = diff --cached --find-renames
 [advice]
 	statusHints = false
+[pull]
+	rebase = true
 [push]
 	default = simple
 	followTags = true
