@@ -510,6 +510,9 @@ zle -N zle-line-finish
 
 # }}}
 
+# mark partial lines with a nice unicode symbol instead of the default %
+PROMPT_EOL_MARK="%F{red}⏎"
+
 # }}}
 
 # Set the window title {{{
