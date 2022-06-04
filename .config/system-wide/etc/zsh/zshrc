@@ -441,6 +441,7 @@ setopt prompt_subst
 typeset -A zsh_prompt_base
 # default base prompt: user@hostname
 zsh_prompt_base[ZSH_DEFAULT_PROMPT]='${zsh_prompt_user}%n%f%k%b%u%s@${zsh_prompt_host}%m%f%k%b%u%s'
+zsh_prompt_base[VIRTUAL_ENV]='${zsh_prompt_user}$(basename -- "${VIRTUAL_ENV}")%f%k%b%u%s@${zsh_prompt_host}%m%f%k%b%u%s'
 
 precmd_prompt() {
     # set the default prompt base
