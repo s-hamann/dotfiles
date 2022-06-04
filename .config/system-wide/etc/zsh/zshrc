@@ -688,6 +688,7 @@ else
     alias ll='ls -lh'
 fi
 is_busybox grep || alias grep='grep --color=auto'
+is_busybox diff || alias diff='diff --color=auto'
 alias df='df -h'
 whence ip >/dev/null && ! is_busybox ip && alias ip='ip -c'
 
