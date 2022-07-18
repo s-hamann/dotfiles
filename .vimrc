@@ -43,7 +43,7 @@ if isdirectory(expand('~/.vim/bundle/Vundle.vim'))
             Plugin 'SirVer/ultisnips'
             Plugin 'honza/vim-snippets'
             if version >= 703
-                Plugin 'sjl/gundo.vim'
+                Plugin 'mbbill/undotree'
             endif
         endif
         if executable('ansible')
@@ -621,8 +621,10 @@ let g:secure_modelines_allowed_items = [
     \ ]
 " }}}
 
-" Gundo {{{
-nnoremap <leader>u :GundoToggle<CR>
+" Undotree {{{
+nnoremap <leader>u :UndotreeToggle<CR>
+let g:undotree_SetFocusWhenToggle = 1
+let g:undotree_WindowLayout = 2
 " }}}
 
 " Rainbow {{{
