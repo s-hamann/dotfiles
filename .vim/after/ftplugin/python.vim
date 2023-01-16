@@ -49,22 +49,6 @@ else
 endif
 " }}}
 
-" vim-flake8 plugin {{{
-" Use my custom flake8 wrapper that detects the correct python version.
-if filereadable(glob("~/bin/flake8"))
-    let g:flake8_cmd=glob("~/bin/flake8")
-endif
-" Automatically run Flake8 when saving files.
-if has('autocmd') && exists('*Flake8')
-    augroup AutoFlake
-        autocmd! BufWritePre <buffer> let b:modified=&modified
-        autocmd! BufWritePost <buffer> if b:modified | silent call Flake8() | endif
-    augroup END
-endif
-" Show errors and warnings in the gutter.
-let g:flake8_show_in_gutter=1
-" }}}
-
 " jedi-vim plugin {{{
 " Do not map anything to autocomplete.
 let g:jedi#completions_command = ''

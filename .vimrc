@@ -30,7 +30,6 @@ if isdirectory(expand('~/.vim/bundle/Vundle.vim'))
         Plugin 'chikamichi/mediawiki.vim'
         Plugin 'luochen1990/rainbow'
         Plugin 'hdima/python-syntax'
-        Plugin 'nvie/vim-flake8'
         Plugin 'hynek/vim-python-pep8-indent'
         if has('signs')
             if executable('git')
@@ -45,6 +44,9 @@ if isdirectory(expand('~/.vim/bundle/Vundle.vim'))
             if version >= 703
                 Plugin 'mbbill/undotree'
             endif
+        endif
+        if version >= 800 && has('job') && has('channel') && has('timers')
+            Plugin 'dense-analysis/ale'
         endif
         if executable('ansible')
             Plugin 'pearofducks/ansible-vim'
