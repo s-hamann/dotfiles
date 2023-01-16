@@ -686,6 +686,8 @@ let g:UltiSnipsListSnippets = "<F3>"
 let g:UltiSnipsJumpForwardTrigger = "`"
 " The trigger used to jump back inside a snippet
 let g:UltiSnipsJumpBackwardTrigger = "¬"
+" Make Python snippets use google style formatting.
+let g:ultisnips_python_style = "google"
 " }}}
 
 " }}}
