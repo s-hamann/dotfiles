@@ -303,7 +303,6 @@ endif
 " }}}
 
 " Tabstop and indenting settings {{{
-filetype indent on " Enable indention based on the filetype.
 set autoindent " Automatically indent new lines.
 set copyindent " Copy the new indent (i.e. spaces/tabs) from the previous line.
 set shiftround " When indenting, round to multiples of shiftwidth.
