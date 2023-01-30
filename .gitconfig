@@ -34,6 +34,11 @@
 	changes = log --stat --find-renames --format=format:\"%C(auto)%h %d %ad %G? %C(119)%an%C(reset) %n%C(bold)%s%C(auto)%n%b\" --date=short
 	wdiff = diff --word-diff=color
 	cdiff = diff --cached --find-renames
+	fixup = "!f() { \
+		target=$(git rev-parse \"$1\"); \
+		git commit --fixup=\"${target}\" \"${@:2}\" && \
+		GIT_EDITOR=true git rebase --interactive --autostash --autosquash \"${target}~\"; \
+		}; f"
 [advice]
 	statusHints = false
 [pull]
