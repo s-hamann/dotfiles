@@ -573,6 +573,17 @@ endif
 
 " Plugin Settings {{{
 
+" ALE {{{
+augroup readonly
+    autocmd!
+    autocmd BufReadPost *
+                \ if &readonly
+                \| let b:ale_enabled = 0
+                \| endif
+                \| autocmd! readonly
+augroup end
+" }}}
+
 " ack.vim {{{
 " Prefer ag over ack, if available
 if executable('ag')
