@@ -53,3 +53,11 @@ endif
 " Do not map anything to autocomplete.
 let g:jedi#completions_command = ''
 " }}}
+
+" Stop mypy from littering the file system with .mypy_cache directories for
+" every python file viewed in vim.
+if executable('mypy')
+    if ! isdirectory('.mypy_cache') && $MYPY_CACHE_DIR == ''
+        let g:ale_python_mypy_options = '--cache-dir "${XDG_RUNTIME_DIR:-${TMPDIR:-/tmp}}/.mypy_cache"'
+    endif
+endif
