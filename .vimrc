@@ -390,13 +390,15 @@ nnoremap <leader>c 0D
 " Use <leader>cd to change to the directory of the currently open file.
 nnoremap <leader>cd :lcd %:p:h<CR>:pwd<CR>
 
-" Make the X11 selection more accessible for copy & paste
-noremap <leader>d "*d
-noremap <leader>D "*D
-noremap <leader>y "*y
-noremap <leader>Y "*y$
-noremap <leader>p "*p
-noremap <leader>P "*P
+if has('clipboard')
+    " Make the X11 selection more accessible for copy & paste
+    nnoremap <leader>d "*d
+    nnoremap <leader>D "*D
+    nnoremap <leader>y "*y
+    nnoremap <leader>Y "*y$
+    nnoremap <leader>p "*p
+    nnoremap <leader>P "*P
+endif
 
 " }}}
 
