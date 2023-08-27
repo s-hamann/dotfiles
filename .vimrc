@@ -567,7 +567,7 @@ if has('autocmd')
     augroup temp_file
         autocmd!
         " This list should cover (at least) ansible vaults, pass and zsh
-        autocmd VimEnter {/tmp,$TMPDIR,$XDG_RUNTIME_DIR,/dev/shm}/{tmp*.yml,pass*.txt,zsh*} call s:unleak()
+        autocmd VimEnter {/tmp,$TMPDIR,$XDG_RUNTIME_DIR,/dev/shm,/tmp/.ansible/tmp/ansible-local-*}/{tmp*.yml,pass*.txt,zsh*} call s:unleak()
     augroup END
 endif
 
