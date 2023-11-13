@@ -95,6 +95,7 @@ fi
 
 # set the vcsh-specific base prompt
 zsh_prompt_base[VCSH_REPO_NAME]='%F{yellow}${VCSH_REPO_NAME}%f'
+zsh_prompt_base[NNNLVL]='${zsh_prompt_user}%f%k%b%u%s'
 
 
 # send a notification if a long-running command finishes
@@ -232,6 +233,111 @@ fi
 
 if whence kitty >/dev/null && [[ "${TERM}" == xterm-kitty* ]]; then
     alias kdiff='kitty +kitten diff'
+fi
+
+if whence nnn >/dev/null; then
+    HISTIGNORE+=('^nnn\s?')
+    function nnn() {
+        # This function wraps nnn. It sets the nnn configuration variables,
+        # runs nnn with the parameters passed to this function and changes to
+        # the last directory used in nnn.
+        # It does not leak the nnn configuration variables into the shell
+        # environment.
+
+        local TMPDIR NNN_OPTS NNN_OPENER NNN_BMS NNN_PLUG NNN_ORDER NNN_COLORS NNN_FCOLORS NNN_ARCHIVE NNN_SSHFS NNN_RCLONE NNN_TRASH NNN_SEL NNN_FIFO NNN_LOCKER NNN_TMPFILE NNN_HELP NNN_MCLICK
+
+        # Block nesting of nnn in subshells
+        if [[ -n "${NNNLVL}" && "${NNNLVL:-0}" -ge 1 ]]; then
+            echo "nnn is already running"
+            return
+        fi
+
+        zmodload -F zsh/stat b:zstat
+        # If any subdirectory in nnn's config directory is a symlink to a
+        # non-existent directory, create it now. This enables linking these
+        # directories to tmpfs mounts.
+        for dir in "${XDG_CONFIG_HOME:-${HOME}/.config}/nnn/"*; do
+            if [[ -L "${dir}" && ! -e "${dir}" ]]; then
+                zstat -A target +link -- "${dir}"
+                mkdir -p -- "${target}"
+            fi
+        done
+        unset dir
+
+        export NNN_PLUG='j:autojump;m:mtpmount;p:preview-tui;i:imgview;e:suedit'
+
+        # Context colours.
+        export NNN_COLORS='#0a0bd00c;2314'
+
+        # File colours.
+        export NNN_FCOLORS=''
+        # Convert $LS_COLORS into an associative array for easier access.
+        declare -A colour_array
+        for colourspec ("${(s.:.)LS_COLORS}"); do
+            colourspec=("${(s:=:)colourspec}")
+            if [[ "${colourspec[2]#38;5;}" == "${colourspec[2]}" \
+                && "${colourspec[2]##*;38;5;}" == "${colourspec[2]}" ]]; then
+                # The colour specification does not start with/contain '38;5;',
+                # i.e. it's not from the 256-colour foreground palette.
+                # If it is from the 8- or 16-colour range, map it to the 256-colour palette.
+                if [[ "${colourspec[2]}" -ge 30 && "${colourspec[2]}" -le 37 ]]; then
+                    colourspec[2]="$(( colourspec[2] - 30 ))"
+                elif [[ "${colourspec[2]}" -ge 90 && "${colourspec[2]}" -le 97 ]]; then
+                    colourspec[2]="$(( colourspec[2] - 90 + 8 ))"
+                else
+                    # The colour is something else, possibly a background
+                    # colour or even a non-colour ANSI code. nnn does not
+                    # support these, so we'll just set it to 0.
+                    colourspec[2]=0
+                fi
+            else
+                # Strip the prefix that indicates the 256-colour palette in
+                # ANSI and any suffix.
+                colourspec[2]="${${${colourspec[2]#38;5;}##*;38;5;}%%;*}"
+            fi
+            # The colour specification is not converted to a single number, the
+            # index in the 256-colour palette. Now, we only need to convert it
+            # to 2-digit hexadecimal notation, so nnn can use it.
+            colour_array[${colourspec[1]}]="$(printf '%02x' "${colourspec[2]}")"
+        done
+        # Unknown or 0B file. $LS_COLORS does not have anything to map to this,
+        # so we just set it to the desired colour.
+        colour_array[empty]='c4'
+        # Missing or file details. Current ls setting relies on background colour, which is not supported by nnn.
+        colour_array[mi]='f7'
+        # Orphan. Same reason as above.
+        colour_array[or]='c6'
+        # Set the file colour configuration variables for nnn. It contains the
+        # colour codes for a number of file types in a specific order.
+        export NNN_FCOLORS=''
+        for key in bd cd di ex no mh ln mi or pi so empty; do
+            NNN_FCOLORS="${NNN_FCOLORS}${colour_array[${key}]:-00}"
+        done
+        unset colourspec colour_array
+
+        (umask 027; mkdir -p -- "${XDG_RUNTIME_DIR:-/run/user/${UID}}/.nnn/")
+        export NNN_SEL="${XDG_RUNTIME_DIR:-/run/user/${UID}}/.nnn/selection"
+        export NNN_FIFO="${XDG_RUNTIME_DIR:-/run/user/${UID}}/.nnn/fifo"
+
+        # The behaviour is set to cd on quit (nnn checks if NNN_TMPFILE is set)
+        # If NNN_TMPFILE is set to a custom path, it must be exported for nnn to
+        # see. To cd on quit only on ^G, remove the "export" and make sure not to
+        # use a custom path, i.e. set NNN_TMPFILE *exactly* as follows:
+        #     NNN_TMPFILE="${XDG_CONFIG_HOME:-$HOME/.config}/nnn/.lastd"
+        export NNN_TMPFILE="${XDG_RUNTIME_DIR:-/run/user/${UID}}/.nnn/lastd"
+
+        # nnn and its plugins often use $TMPDIR to write stuff to, defaulting
+        # to /tmp. This stuff may end up world-readable.
+        # Set it to something more sensible.
+        export TMPDIR="${XDG_RUNTIME_DIR:-/run/user/${UID}}/.nnn/"
+
+        command nnn -i -U "$@"
+
+        if [[ -f "${NNN_TMPFILE}" ]]; then
+            . "${NNN_TMPFILE}"
+            rm -f -- "${NNN_TMPFILE}" >/dev/null
+        fi
+    }
 fi
 
 # add completion for python2 and similar symlinks
