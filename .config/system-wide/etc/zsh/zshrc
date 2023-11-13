@@ -563,6 +563,8 @@ zstyle ':completion:*:messages'     format '%d'
 
 setopt completeinword # complete in word, not just at the end
 
+setopt numeric_glob_sort # sort numeric filename matches numerically rather than lexicographically
+
 # activate colour-completion
 zstyle ':completion:*:default' list-colors ${(s.:.)LS_COLORS}
 
