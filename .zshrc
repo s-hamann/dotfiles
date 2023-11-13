@@ -224,6 +224,7 @@ fi
 if [[ -n "${bat}" ]]; then
     alias cat="${bat}"
     export BAT_PAGER='less -RF'
+    export BAT_THEME='gruvbox-dark'
     [[ "$(tput sitm)" != '' ]] && alias bat="${bat} --italic-text=always"
     export MANPAGER="sh -c 'col -bx | ${bat} -l man -p'"
     unset bat
