@@ -1,5 +1,10 @@
 *
 !/.config
+!/.config/vcsh
+!/.config/vcsh/hooks-available
+!/.config/vcsh/hooks-available/kitty.post-clone-retired.sh
+!/.config/vcsh/hooks-enabled
+!/.config/vcsh/hooks-enabled/kitty.post-clone-retired.sh
 !/.config/kitty
 !/.config/kitty/**
 !/.gitignore.d

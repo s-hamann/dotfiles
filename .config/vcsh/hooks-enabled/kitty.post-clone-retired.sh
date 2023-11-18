@@ -1,0 +1,1 @@
+../hooks-available/kitty.post-clone-retired.sh
