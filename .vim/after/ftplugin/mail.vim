@@ -9,6 +9,9 @@ setlocal nofoldenable
 setlocal nonumber
 setlocal norelativenumber
 
+" disable persisten undo
+setlocal noundofile
+
 if has('gui')
     " disable the menu bar
     setlocal guioptions-=m
