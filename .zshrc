@@ -347,23 +347,6 @@ done
 unset pv
 
 
-function nmap-top-ports() {
-    local proto
-    if [[ $# -eq 0 || $# -gt 2 ]]; then
-        echo "Usage: nmap-top-ports <number> [tcp|udp]" 2>&1
-        return 1
-    fi
-    if [[ -z "$2" || "$2" = "tcp" || "$2" = "TCP" ]]; then
-        proto="tcp"
-    elif [[ "$2" = "udp" || "$2" = "UDP" ]]; then
-        proto="udp"
-    else
-        echo "Usage: nmap-top-ports <number> [tcp|udp]" 2>&1
-        return 1
-    fi
-    grep "^\S\+\s\+[0-9]\+/${proto}" /usr/share/nmap/nmap-services | sort -nrk 3 | sed "s/^\S\+\s\+\([0-9]\+\)\/${proto}.*/\1/" | head -n $1 | tr '\n' ',' | sed 's/,$//'
-}
-
 [[ -e "${HOME}/.zshrc.local" ]] && source "${HOME}/.zshrc.local"
 
 if which tmux &>/dev/null && [[ -n "${SSH_TTY}" && -z "${TMUX}" ]]; then
