@@ -1,6 +1,6 @@
 snippet file "file module"
 ansible.builtin.file:
-	path: ${1}
+	path: '${1}'
 	state: ${2:#file|link|directory|hard|touch|absent}
 	owner: ${3:root}
 	group: ${4:root}
@@ -13,8 +13,8 @@ endsnippet
 
 snippet copy "copy module"
 ansible.builtin.copy:
-	dest: ${1}
-	src: ${2}
+	dest: '${1}'
+	src: '${2}'
 	remote_src: ${3:#true|false}
 	content: ${4}
 	directory_mode: ${5}
@@ -28,9 +28,8 @@ endsnippet
 
 snippet template "template module"
 ansible.builtin.template:
-	dest: ${1}
-	src: ${2}
-	content: ${3}
+	dest: '${1}'
+	src: '${2}'
 	follow: ${4:#true|false}
 	owner: ${5:root}
 	group: ${6:root}
@@ -40,9 +39,9 @@ endsnippet
 
 snippet lineinfile "lineinfile module"
 ansible.builtin.lineinfile:
-	path: ${1}
-	line: ${2}
-	regexp: ${3}
+	path: '${1}'
+	line: '${2}'
+	regexp: '${3}'
 	backrefs: ${4:#true|false}
 	insertbefore: ${5:#BOF|*regex*}
 	insertafter: ${6:#EOF|*regex*}
@@ -56,9 +55,9 @@ endsnippet
 
 snippet replace "replace module"
 ansible.builtin.replace:
-	path: ${1}
-	regexp: ${2}
-	replace: ${3}
+	path: '${1}'
+	regexp: '${2}'
+	replace: '${3}'
 	before: ${4}
 	after: ${5}
 	owner: ${6:root}
@@ -108,7 +107,7 @@ snippet distro_vars "include distribution-specific vars files"
 - name: 'Gather OS specific variables'
 	ansible.builtin.include_vars: "{{ vars_file }}"
 	loop:
-		- 'default.yml'
+		- default.yml
 		- "{{ ansible_facts['os_family'] | lower }}.yml"
 		- "{{ ansible_facts['distribution'] | lower }}.yml"
 		- "{{ ansible_facts['distribution'] | lower }}-{{ ansible_facts['distribution_major_version'] }}.yml"
