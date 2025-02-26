@@ -1,5 +1,5 @@
 snippet file "file module"
-file:
+ansible.builtin.file:
 	path: ${1}
 	state: ${2:#file|link|directory|hard|touch|absent}
 	owner: ${3:root}
@@ -12,7 +12,7 @@ file:
 endsnippet
 
 snippet copy "copy module"
-copy:
+ansible.builtin.copy:
 	dest: ${1}
 	src: ${2}
 	remote_src: ${3:#true|false}
@@ -27,7 +27,7 @@ copy:
 endsnippet
 
 snippet template "template module"
-template:
+ansible.builtin.template:
 	dest: ${1}
 	src: ${2}
 	content: ${3}
@@ -39,7 +39,7 @@ template:
 endsnippet
 
 snippet lineinfile "lineinfile module"
-lineinfile:
+ansible.builtin.lineinfile:
 	path: ${1}
 	line: ${2}
 	regexp: ${3}
@@ -55,7 +55,7 @@ lineinfile:
 endsnippet
 
 snippet replace "replace module"
-replace:
+ansible.builtin.replace:
 	path: ${1}
 	regexp: ${2}
 	replace: ${3}
@@ -68,7 +68,7 @@ replace:
 endsnippet
 
 snippet cron "cron module"
-cron:
+ansible.builtin.cron:
 	name: ${1}
 	job: ${2}
 	user: ${3:root}
@@ -82,7 +82,7 @@ cron:
 endsnippet
 
 snippet cron-env "cron module"
-cron:
+ansible.builtin.cron:
 	env: true
 	name: ${1}
 	value: ${2}
@@ -92,21 +92,21 @@ cron:
 endsnippet
 
 snippet package "package module"
-package:
+ansible.builtin.package:
 	name: ${1}
 	state: ${2:#present|absent}
 endsnippet
 
 snippet service "service module"
-service:
+ansible.builtin.service:
 	name: ${1}
 	enabled: ${2:#true|false}
-	state: "{{ ansible_facts['is_chroot'] | ternary(omit, '${3:#started|stopped|restarted|reloaded}') }}"
+	state: "{{ ansible_facts['is_chroot'] | ansible.builtin.ternary(omit, '${3:#started|stopped|restarted|reloaded}') }}"
 endsnippet
 
 snippet distro_vars "include distribution-specific vars files"
-- name: 'gather os specific variables'
-	include_vars: '{{ vars_file }}'
+- name: 'Gather OS specific variables'
+	ansible.builtin.include_vars: "{{ vars_file }}"
 	loop:
 		- 'default.yml'
 		- "{{ ansible_facts['os_family'] | lower }}.yml"
