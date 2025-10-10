@@ -27,7 +27,6 @@ if isdirectory(expand('~/.vim/bundle/Vundle.vim'))
     Plugin 'ciaranm/securemodelines'
     Plugin 'plasticboy/vim-markdown'
     if $USER !=# 'root'
-        Plugin 'chikamichi/mediawiki.vim'
         Plugin 'luochen1990/rainbow'
         Plugin 'hynek/vim-python-pep8-indent'
         if has('signs')
