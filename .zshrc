@@ -192,6 +192,19 @@ for p in "${zsh_syntax_highlighting_paths[@]}"; do
 done
 unset p zsh_syntax_highlighting_paths
 
+# zsh-autosuggestions plugin
+zsh_autosuggestions_paths=(
+"/usr/share/zsh/site-functions/" # Gentoo
+"/usr/share/zsh-autosuggestions/" # Debian
+)
+for p in "${zsh_autosuggestions_paths[@]}"; do
+    if [[ -f "${p}/zsh-autosuggestions.zsh" ]]; then
+        source "${p}/zsh-autosuggestions.zsh"
+        break
+    fi
+done
+unset p zsh_autosuggestions_paths
+
 # autojump plugin
 if [[ -f '/etc/profile.d/autojump.zsh' ]]; then
     source '/etc/profile.d/autojump.zsh'
