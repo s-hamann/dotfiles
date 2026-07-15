@@ -206,7 +206,13 @@ fi
 
 
 # some aliases
-whence xdg-open >/dev/null && alias o=xdg-open
+if whence xdg-open >/dev/null; then
+    if [[ "${XDG_SESSION_DESKTOP}" == sway ]]; then
+        alias o='swaymsg exec xdg-open'
+    else
+        alias o=xdg-open
+    fi
+fi
 whence sudo >/dev/null && alias sudo='sudo ' # expand aliases after sudo
 whence vim >/dev/null && alias vi='vim -p'
 
