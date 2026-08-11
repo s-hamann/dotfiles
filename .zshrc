@@ -221,7 +221,9 @@ fi
 # some aliases
 if whence xdg-open >/dev/null; then
     if [[ "${XDG_SESSION_DESKTOP}" == sway ]]; then
-        alias o='swaymsg exec "cd \"$PWD\" && xdg-open"'
+        o() {
+            swaymsg exec cd "${PWD:q}" '&&' xdg-open "${@:q}"
+        }
     else
         alias o=xdg-open
     fi
